@@ -96,7 +96,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:background="@drawable/hollow_rounded_edges_box"
+            android:background="@drawable/hollow_rounded_edges_box_with_primary"
             android:text="Click here to Register"
             android:textColor="@color/colorPrimary"
             android:foreground="?attr/selectableItemBackground"

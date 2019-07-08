@@ -5,6 +5,8 @@ import com.upasthit.BR
 import com.upasthit.R
 import com.upasthit.databinding.ActivityLoginBinding
 import com.upasthit.ui.base.BaseActivity
+import com.upasthit.ui.selectclass.ClassSelectionActivity
+import com.upasthit.util.ActivityManager
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
@@ -27,6 +29,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
 
     override fun init() {
         buttonSignIn.setOnClickListener {
+            ActivityManager.startActivity(this@LoginActivity, ClassSelectionActivity::class.java)
+            startFwdAnimation(this@LoginActivity)
         }
     }
 
