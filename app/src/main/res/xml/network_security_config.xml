@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<network-security-config>-->
+    <!--<domain-config cleartextTrafficPermitted="true">-->
+        <!--<domain includeSubdomains="true">af293494236ee11e9989602fe773b974-224893321.us-east-1.elb.amazonaws.com</domain>-->
+    <!--</domain-config>-->
+<!--</network-security-config>-->
+
+<network-security-config>
+<base-config cleartextTrafficPermitted="true" />
+</network-security-config>
