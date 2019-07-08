@@ -1,6 +1,7 @@
 package com.upasthit.ui.splash
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.Window
 import android.view.WindowManager
 import androidx.lifecycle.ViewModelProviders
@@ -8,6 +9,8 @@ import com.upasthit.BR
 import com.upasthit.R
 import com.upasthit.databinding.ActivitySplashBinding
 import com.upasthit.ui.base.BaseActivity
+import com.upasthit.ui.login.LoginActivity
+import com.upasthit.util.ActivityManager
 
 class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
 
@@ -34,6 +37,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
     }
 
     override fun init() {
+        selectNextScreen()
     }
 
     override fun initLiveDataObservables() {
@@ -41,5 +45,14 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
 
     private fun selectNextScreen() {
 
+        Handler().postDelayed({
+            //            if (AppPreferenceStorage.userLoggedIn!!) {
+//                ActivityManager.startFreshActivityClearStack(this@SplashActivity, HomeActivity::class.java)
+//            } else {
+            ActivityManager.startFreshActivityClearStack(this@SplashActivity, LoginActivity::class.java)
+//            }
+//            startFadeInAnimation(this@SplashActivity)
+            startFwdAnimation(this@SplashActivity)
+        }, 1000)
     }
 }
