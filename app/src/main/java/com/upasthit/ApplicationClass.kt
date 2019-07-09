@@ -3,6 +3,7 @@ package com.upasthit
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
+import com.upasthit.data.model.local.db.DatabaseRealm
 import com.upasthit.data.network.RetrofitApiClient
 import com.upasthit.data.model.local.pref.AppPreferenceStorage
 
@@ -18,6 +19,7 @@ class ApplicationClass : Application() {
 
         @SuppressLint("StaticFieldLeak")
         lateinit var mAppContext: Context
+        lateinit var mDataBaseRealm: DatabaseRealm
 
     }
 
@@ -40,5 +42,15 @@ class ApplicationClass : Application() {
 //            Fabric.with(this, Crashlytics())
         }
 
+        /**
+         * Realm initialization
+         */
+        initRealm()
+
+    }
+
+    private fun initRealm() {
+        mDataBaseRealm = DatabaseRealm()
+        mDataBaseRealm.setup(this)
     }
 }
