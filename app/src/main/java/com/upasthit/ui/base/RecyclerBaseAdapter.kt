@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.atcoi.app.ui.base.RecyclerViewHolder
+import com.upasthit.BR
 
 
 abstract class RecyclerBaseAdapter : RecyclerView.Adapter<RecyclerViewHolder>() {
@@ -24,10 +25,10 @@ abstract class RecyclerBaseAdapter : RecyclerView.Adapter<RecyclerViewHolder>() 
 
         getDataModel(position)
                 ?.let {
-                    //                    val bindingSuccess = holder.binding.setVariable(BR.dataModel, it)
-//                    if (!bindingSuccess) {
-//                        throw IllegalStateException("Binding ${holder.binding} viewModel variable name should be 'viewModel'")
-//                    }
+                    val bindingSuccess = holder.binding.setVariable(BR.dataModel, it)
+                    if (!bindingSuccess) {
+                        throw IllegalStateException("Binding ${holder.binding} viewModel variable name should be 'viewModel'")
+                    }
                 }
     }
 

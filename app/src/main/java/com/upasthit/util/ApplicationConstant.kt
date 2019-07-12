@@ -29,11 +29,7 @@ object ApplicationConstant {
     const val REMOVE_FRAGMENT = 3
 
     //Bundles
-    const val KEY_MOBILE_NO = "mobile_no"
-    const val USER_PROFILE_RESPONSE = "user_profile_response"
-    const val USER_DREAM = "user_dream"
-    const val USER_INTEREST = "user_interest"
-    const val COUNTRY_CODE_ITEM = "country_code"
+    const val ABSENT_STUDENT_DATA = "absent_student_data"
     const val IS_FROM_NAVIGATION_DRAWER = "isFromNavigationDrawer"
 
 }

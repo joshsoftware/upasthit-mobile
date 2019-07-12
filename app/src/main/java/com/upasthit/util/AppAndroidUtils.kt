@@ -21,6 +21,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 object AppAndroidUtils {
 
     // UTC - 2019-01-29T19:58:20.087+05:30
@@ -292,5 +293,11 @@ object AppAndroidUtils {
         }
 
         return if (monthsVal == 0) 1 else monthsVal
+    }
+
+    fun calculateNoOfColumns(context: Context, columnWidthDp: Float): Int { // For example columnWidthdp=180
+        val displayMetrics = context.resources.displayMetrics
+        val screenWidthDp = displayMetrics.widthPixels / displayMetrics.density
+        return (screenWidthDp / columnWidthDp + 0.5).toInt()
     }
 }

@@ -5,6 +5,9 @@ import com.upasthit.BR
 import com.upasthit.R
 import com.upasthit.databinding.ActivityClassSelectionBinding
 import com.upasthit.ui.base.BaseActivity
+import com.upasthit.ui.home.HomeActivity
+import com.upasthit.util.ActivityManager
+import kotlinx.android.synthetic.main.activity_class_selection.*
 
 class ClassSelectionActivity : BaseActivity<ActivityClassSelectionBinding, ClassSelectionViewModel>() {
 
@@ -25,6 +28,10 @@ class ClassSelectionActivity : BaseActivity<ActivityClassSelectionBinding, Class
     override fun getBindingVariable(): Int = BR.viewModel
 
     override fun init() {
+        bottomLayout.setOnClickListener {
+            ActivityManager.startActivity(this@ClassSelectionActivity, HomeActivity::class.java)
+            startFwdAnimation(this@ClassSelectionActivity)
+        }
     }
 
     override fun initLiveDataObservables() {
