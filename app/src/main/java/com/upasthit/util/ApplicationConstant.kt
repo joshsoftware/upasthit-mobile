@@ -8,7 +8,7 @@ object ApplicationConstant {
     var isDebuggable = true
 
     //Api url component
-    val SERVER_URL = Environment.PRODUCTION.baseUrl
+    val SERVER_URL = Environment.STAGING.baseUrl
 
     //Connection timeout
     val TIMEOUT_CONNECTION = 5

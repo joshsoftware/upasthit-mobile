@@ -16,7 +16,7 @@ public enum Environment {
     }, STAGING {
         @Override
         public String getBaseUrl() {
-            return "";
+            return "https://stage.upasthit.joshsoftware.com";
         }
 
         @Override
@@ -27,7 +27,7 @@ public enum Environment {
     }, PRODUCTION {
         @Override
         public String getBaseUrl() {
-            return "http://af293494236ee11e9989602fe773b974-224893321.us-east-1.elb.amazonaws.com/";
+            return "";
         }
 
         @Override
