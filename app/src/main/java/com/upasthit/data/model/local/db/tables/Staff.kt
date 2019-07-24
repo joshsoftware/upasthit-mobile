@@ -7,8 +7,10 @@ open class Staff(
         var designation: String? = null,
         var id: Int? = null,
         var mobile_number: String? = null,
-        var name: String? = null,
         var pin: String? = null,
         var registration_no: String? = null,
-        var standard_ids: RealmList<String>? = null
+        var standard_ids: RealmList<String>? = null,
+        var first_name: String? = null,
+        var last_name: String? = null,
+        var preferred_language: String? = null
 ) : RealmObject()

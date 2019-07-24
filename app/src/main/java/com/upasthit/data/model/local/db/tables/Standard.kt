@@ -7,6 +7,5 @@ open class Standard(
         var id: Int? = null,
         var section: String? = null,
         var standard: String? = null,
-        var start_time: String? = null,
         var students: RealmList<Student>? = null
 ) : RealmObject()

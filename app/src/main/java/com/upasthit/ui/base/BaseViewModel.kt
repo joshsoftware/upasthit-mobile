@@ -6,6 +6,8 @@ import androidx.databinding.PropertyChangeRegistry
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.upasthit.ApplicationClass
+import com.upasthit.data.model.local.db.DatabaseRealm
 import com.upasthit.data.network.NetworkClient
 import com.upasthit.data.network.RetrofitApiClient
 import io.reactivex.disposables.Disposable
@@ -17,6 +19,8 @@ abstract class BaseViewModel : ViewModel(), Observable {
     private var mCallbacks: PropertyChangeRegistry? = null
 
     protected var mNetworkClient: NetworkClient = NetworkClient(RetrofitApiClient.getNetworkServices())
+
+    protected var mDatabaseRealm: DatabaseRealm = ApplicationClass.mDataBaseRealm
 
     private val showProcess = MutableLiveData<Boolean>()
 

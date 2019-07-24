@@ -18,6 +18,7 @@ import com.upasthit.ui.base.BaseActivity
 import com.upasthit.util.ActivityManager
 import com.upasthit.util.AppAndroidUtils
 import com.upasthit.util.ApplicationConstant
+import io.realm.annotations.Ignore
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.app_bar_home.*
 import kotlinx.android.synthetic.main.content_home.*
@@ -96,7 +97,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
     private val mClickPositionObserver = Observer<Int> {
         val interestList: MutableList<Student> = ArrayList<Student>()
         mViewModel.getStudentList().forEach { t: Student? ->
-            val student = Student(t?.name, t?.registration_no, t?.roll_no, t?.isSelected)
+            val student = Student(t?.first_name, t?.first_name, t?.registration_no, t?.roll_no, t?.isSelected)
             interestList.add(student)
         }
         interestList[it].isSelected = !mViewModel.getStudentList()[it].isSelected!!

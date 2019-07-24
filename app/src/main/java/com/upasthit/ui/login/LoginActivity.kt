@@ -1,8 +1,10 @@
 package com.upasthit.ui.login
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProviders
 import com.upasthit.BR
 import com.upasthit.R
+import com.upasthit.data.model.local.db.tables.SyacUpApiResponse
 import com.upasthit.databinding.ActivityLoginBinding
 import com.upasthit.ui.base.BaseActivity
 import com.upasthit.ui.selectclass.ClassSelectionActivity

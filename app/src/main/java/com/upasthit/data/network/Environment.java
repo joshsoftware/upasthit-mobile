@@ -16,7 +16,7 @@ public enum Environment {
     }, STAGING {
         @Override
         public String getBaseUrl() {
-            return "https://stage.upasthit.joshsoftware.com";
+            return "https://stage.upasthit.joshsoftware.com/";
         }
 
         @Override

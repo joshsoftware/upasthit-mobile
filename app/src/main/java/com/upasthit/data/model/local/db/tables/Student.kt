@@ -6,7 +6,8 @@ import io.realm.RealmObject
 import io.realm.annotations.Ignore
 
 open class Student(
-        var name: String? = null,
+        var first_name: String? = null,
+        var last_name: String? = null,
         var registration_no: String? = null,
         var roll_no: Int? = null,
         @Ignore var isSelected: Boolean? = false
@@ -14,12 +15,14 @@ open class Student(
     constructor(parcel: Parcel) : this(
             parcel.readString(),
             parcel.readString(),
+            parcel.readString(),
             parcel.readValue(Int::class.java.classLoader) as? Int,
             parcel.readValue(Boolean::class.java.classLoader) as? Boolean) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(name)
+        parcel.writeString(first_name)
+        parcel.writeString(last_name)
         parcel.writeString(registration_no)
         parcel.writeValue(roll_no)
         parcel.writeValue(isSelected)
