@@ -2,11 +2,14 @@ package com.upasthit.ui.login
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.upasthit.data.model.local.db.tables.School
+import com.upasthit.data.model.local.db.tables.Staff
+import com.upasthit.data.model.local.db.tables.Standard
 import com.upasthit.data.model.local.db.tables.SyacUpApiResponse
 import com.upasthit.data.network.ErrorUtils
 import com.upasthit.ui.base.BaseViewModel
+import com.upasthit.util.DebugLog
 import retrofit2.Response
-import android.R.attr.resource
 
 
 class LoginViewModel : BaseViewModel() {
@@ -19,7 +22,7 @@ class LoginViewModel : BaseViewModel() {
 
     fun getCountries() {
         setProgress(true)
-        mDisposable = mNetworkClient.getSynData("7798805221", this)!!
+        mDisposable = mNetworkClient.getSynData("9998823112", this)!!
     }
 
     fun getCountriesResponse(): LiveData<SyacUpApiResponse> {
@@ -32,12 +35,21 @@ class LoginViewModel : BaseViewModel() {
             response!!.isSuccessful -> {
                 mSyncDataResponse.postValue(response.body())
 
+
                 // add response to realm database
                 val realm = mDatabaseRealm.realmInstance
-                realm.beginTransaction()
-                realm.copyToRealmOrUpdate(response.body())
-                realm.commitTransaction()
-                realm.close()
+                realm.executeTransaction { realm ->
+                    realm.copyToRealm(response.body())
+                }
+
+
+                val notesCount = realm.where(School::class.java).findAll().count()
+                val notesCount2 = realm.where(Standard::class.java).findAll().count()
+                val notesCount3 = realm.where(Staff::class.java).findAll().count()
+
+                DebugLog.e("School count     $notesCount")
+                DebugLog.e("Standard count    $notesCount2")
+                DebugLog.e("Staff count      $notesCount3")
             }
 
             response.code() == 401 -> {
