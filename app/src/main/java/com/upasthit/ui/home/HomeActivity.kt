@@ -64,7 +64,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
 
         val interestList: MutableList<Student> = ArrayList<Student>()
         studentList?.forEach { t: Student? ->
-            val student = Student(t?.first_name, t?.first_name, t?.registration_no, t?.roll_no, t?.isSelected)
+            val student = Student(t?.first_name, t?.last_name, t?.registration_no, t?.roll_no, t?.isSelected)
             interestList.add(student)
         }
         mViewModel.setStudentList(interestList)
@@ -119,7 +119,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
 
         val interestList: MutableList<Student> = ArrayList<Student>()
         mViewModel.getStudentList().forEach { t: Student? ->
-            val student = Student(t?.first_name, t?.first_name, t?.registration_no, t?.roll_no, t?.isSelected)
+            val student = Student(t?.first_name, t?.last_name, t?.registration_no, t?.roll_no, t?.isSelected)
             interestList.add(student)
         }
         interestList[it].isSelected = !mViewModel.getStudentList()[it].isSelected!!

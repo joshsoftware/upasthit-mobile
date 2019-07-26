@@ -9,14 +9,14 @@ open class Student(
         var first_name: String? = null,
         var last_name: String? = null,
         var registration_no: String? = null,
-        var roll_no: Int? = null,
+        var roll_no: String? = null,
         @Ignore var isSelected: Boolean? = false
 ) : RealmObject(), Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
-            parcel.readValue(Int::class.java.classLoader) as? Int,
+            parcel.readString(),
             parcel.readValue(Boolean::class.java.classLoader) as? Boolean) {
     }
 
@@ -24,7 +24,7 @@ open class Student(
         parcel.writeString(first_name)
         parcel.writeString(last_name)
         parcel.writeString(registration_no)
-        parcel.writeValue(roll_no)
+        parcel.writeString(roll_no)
         parcel.writeValue(isSelected)
     }
 
