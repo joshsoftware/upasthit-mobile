@@ -38,11 +38,11 @@
             android:id="@+id/textViewTeacherName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Shobhana Mehra"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="@+id/textViewEnterMobileTitle"
             app:layout_constraintStart_toStartOf="@+id/textViewEnterMobileTitle"
-            app:layout_constraintTop_toTopOf="@+id/guidelineHor25" />
+            app:layout_constraintTop_toTopOf="@+id/guidelineHor25"
+            tools:text="Shobhana Mehra" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineHor50"
@@ -64,7 +64,7 @@
 
         <Spinner
             android:id="@+id/spinnerClass"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
@@ -81,6 +81,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:visibility="gone"
             android:layout_marginBottom="8dp"
             android:text="Section"
             app:layout_constraintBottom_toTopOf="@+id/guidelineHor50"
@@ -90,6 +91,7 @@
         <Spinner
             android:id="@+id/spinnerSection"
             android:layout_width="0dp"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
@@ -111,52 +113,22 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/bottomLayout"
             android:layout_width="match_parent"
-            android:foreground="?attr/selectableItemBackground"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
+            android:foreground="?attr/selectableItemBackground"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <ImageView
-                android:id="@+id/imageViewCross"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_cross"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/guideHor25"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideHor25"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.25" />
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="0dp"
-                android:background="@android:color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/guideHor25"
-                app:layout_constraintStart_toStartOf="@+id/guideHor25"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <TextView
                 android:id="@+id/textViewConfirm"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
+                android:gravity="center"
                 android:text="Confirm"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
@@ -167,6 +139,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

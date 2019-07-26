@@ -18,13 +18,15 @@ import com.upasthit.ui.base.BaseActivity
 import com.upasthit.util.ActivityManager
 import com.upasthit.util.AppAndroidUtils
 import com.upasthit.util.ApplicationConstant
-import io.realm.annotations.Ignore
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.app_bar_home.*
 import kotlinx.android.synthetic.main.content_home.*
 
 
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), NavigationView.OnNavigationItemSelectedListener {
+    override fun navigateToNextScreen() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     var isListViewSelected = true
     private lateinit var mStudentsAdapter: StudentsAdapter

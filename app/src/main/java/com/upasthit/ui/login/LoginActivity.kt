@@ -1,17 +1,22 @@
 package com.upasthit.ui.login
 
-import androidx.lifecycle.MutableLiveData
+import android.os.Bundle
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.upasthit.BR
 import com.upasthit.R
+import com.upasthit.data.model.local.db.tables.Staff
 import com.upasthit.data.model.local.db.tables.SyacUpApiResponse
 import com.upasthit.databinding.ActivityLoginBinding
 import com.upasthit.ui.base.BaseActivity
-import com.upasthit.ui.selectclass.ClassSelectionActivity
 import com.upasthit.util.ActivityManager
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
+
+    override fun navigateToNextScreen() {
+
+    }
 
     init {
         mToolbarRequired = false
@@ -31,11 +36,38 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
 
     override fun init() {
         buttonSignIn.setOnClickListener {
-            ActivityManager.startActivity(this@LoginActivity, ClassSelectionActivity::class.java)
-            startFwdAnimation(this@LoginActivity)
+            checkForMobileNoPresentInLocalDatabase(textInputEditTextMobileNo.text.toString())
+        }
+    }
+
+    private fun checkForMobileNoPresentInLocalDatabase(mobileNumber: String) {
+
+        //check mobile number in local database
+        val realm = mViewModel.mDatabaseRealm.realmInstance
+        val mStaff = realm.where(Staff::class.java).equalTo("mobile_number", mobileNumber).findFirst()
+
+        if (mStaff != null) {
+            switchToNextScreen(mStaff)
+        } else {
+            mViewModel.getSchoolDetails(mobileNumber)
         }
     }
 
     override fun initLiveDataObservables() {
+        mViewModel.getSchoolDetailsResponse().observe(this, loginResponseObserver)
+    }
+
+    private val loginResponseObserver: Observer<SyacUpApiResponse> = Observer {
+        checkForMobileNoPresentInLocalDatabase(textInputEditTextMobileNo.text.toString())
+    }
+
+    private fun switchToNextScreen(mStaff: Staff) {
+
+        val bundle = Bundle()
+        bundle.putString("mobile_number", mStaff.mobile_number)
+
+        ActivityManager.startActivityWithBundle(this@LoginActivity, VerifyPinActivity::class.java, bundle)
+        startFwdAnimation(this@LoginActivity)
+        finish()
     }
 }

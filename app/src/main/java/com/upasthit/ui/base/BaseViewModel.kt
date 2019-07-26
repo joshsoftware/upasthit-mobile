@@ -20,7 +20,7 @@ abstract class BaseViewModel : ViewModel(), Observable {
 
     protected var mNetworkClient: NetworkClient = NetworkClient(RetrofitApiClient.getNetworkServices())
 
-    protected var mDatabaseRealm: DatabaseRealm = ApplicationClass.mDataBaseRealm
+    var mDatabaseRealm: DatabaseRealm = ApplicationClass.mDataBaseRealm
 
     private val showProcess = MutableLiveData<Boolean>()
 

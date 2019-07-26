@@ -10,12 +10,14 @@ import com.upasthit.R
 import com.upasthit.data.model.local.db.tables.Student
 import com.upasthit.databinding.ActivityAbsentStudentBinding
 import com.upasthit.ui.base.BaseActivity
-import com.upasthit.ui.home.StudentsAdapter
 import com.upasthit.util.AppAndroidUtils
 import com.upasthit.util.ApplicationConstant
 import kotlinx.android.synthetic.main.activity_absent_student.*
 
 class AbsentStudentActivity : BaseActivity<ActivityAbsentStudentBinding, AbsentStudentViewModel>() {
+    override fun navigateToNextScreen() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     var isListViewSelected = true
     private lateinit var mAbsentStudentAdapter: AbsentStudentAdapter

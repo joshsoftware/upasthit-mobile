@@ -17,15 +17,15 @@ class LoginViewModel : BaseViewModel() {
     private val mSyncDataResponse = MutableLiveData<SyacUpApiResponse>()
 
     init {
-        getCountries()
+//        getSchoolDetails()
     }
 
-    fun getCountries() {
+    fun getSchoolDetails(mobileNumber: String) {
         setProgress(true)
-        mDisposable = mNetworkClient.getSynData("9998823112", this)!!
+        mDisposable = mNetworkClient.getSynData(mobileNumber, this)!!
     }
 
-    fun getCountriesResponse(): LiveData<SyacUpApiResponse> {
+    fun getSchoolDetailsResponse(): LiveData<SyacUpApiResponse> {
         return mSyncDataResponse
     }
 
@@ -35,13 +35,11 @@ class LoginViewModel : BaseViewModel() {
             response!!.isSuccessful -> {
                 mSyncDataResponse.postValue(response.body())
 
-
                 // add response to realm database
                 val realm = mDatabaseRealm.realmInstance
                 realm.executeTransaction { realm ->
                     realm.copyToRealm(response.body())
                 }
-
 
                 val notesCount = realm.where(School::class.java).findAll().count()
                 val notesCount2 = realm.where(Standard::class.java).findAll().count()
@@ -50,6 +48,7 @@ class LoginViewModel : BaseViewModel() {
                 DebugLog.e("School count     $notesCount")
                 DebugLog.e("Standard count    $notesCount2")
                 DebugLog.e("Staff count      $notesCount3")
+                DebugLog.e("Staff standard count " + realm.where(Staff::class.java).findFirst()?.standard_ids?.count())
             }
 
             response.code() == 401 -> {

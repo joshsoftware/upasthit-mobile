@@ -13,6 +13,9 @@ import com.upasthit.ui.login.LoginActivity
 import com.upasthit.util.ActivityManager
 
 class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
+    override fun navigateToNextScreen() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     init {
         mToolbarRequired = false

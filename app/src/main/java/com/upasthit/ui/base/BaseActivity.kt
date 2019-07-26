@@ -254,6 +254,8 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel> : AppCompatA
         activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 
+    abstract fun navigateToNextScreen()
+
     /**
      * To handle error
      */
