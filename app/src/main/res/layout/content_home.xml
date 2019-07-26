@@ -86,13 +86,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="16dp"
-                android:text="26-July-2019"
                 android:textColor="@android:color/black"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewAbsentStudentCount"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/guideVer70"
-                app:layout_constraintTop_toTopOf="@+id/textViewAbsentStudentCount" />
+                app:layout_constraintTop_toTopOf="@+id/textViewAbsentStudentCount"
+                tools:text="26-July-2019" />
 
             <TextView
                 android:id="@+id/textViewStudentAbsentTitle"
@@ -115,13 +115,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="Friday"
                 android:textColor="@android:color/black"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewStudentAbsentTitle"
                 app:layout_constraintEnd_toEndOf="@+id/textViewDate"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/guideVer70"
-                app:layout_constraintTop_toTopOf="@+id/textViewStudentAbsentTitle" />
+                app:layout_constraintTop_toTopOf="@+id/textViewStudentAbsentTitle"
+                tools:text="Friday" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,5 +1,7 @@
 package com.upasthit.data.network
 
+import com.upasthit.data.model.api.request.CreateAttendanceRequest
+import com.upasthit.ui.absentstudent.AbsentStudentViewModel
 import com.upasthit.ui.login.LoginViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -23,11 +25,11 @@ class NetworkClient constructor(networkServices: NetworkServices?) {
     }
 
     /**
-     * To call api for getting all countries
+     * To call api for getting school data
      */
 
     fun getSynData(mobileNo: String,
-                     mViewModel: LoginViewModel): Disposable? {
+                   mViewModel: LoginViewModel): Disposable? {
         return mNetworkServices?.syncData(mobileNo)
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())
@@ -38,5 +40,15 @@ class NetworkClient constructor(networkServices: NetworkServices?) {
                 })
     }
 
+    fun createAttendance(mCreateDeleteInterestRequest: CreateAttendanceRequest, mViewModel: AbsentStudentViewModel): Disposable? {
+        return mNetworkServices?.createAttendance(mCreateDeleteInterestRequest)
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribeOn(Schedulers.io())
+                ?.subscribe({ t ->
+                    mViewModel.handleAttendanceResponse(t)
+                }, { t ->
+                    mViewModel.handleApiErrors(getFailureMessage(t))
+                })
+    }
 
 }

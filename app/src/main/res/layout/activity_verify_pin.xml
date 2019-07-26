@@ -51,6 +51,7 @@
             android:layout_marginBottom="8dp"
             android:background="@android:color/white"
             android:hint="Pin"
+            android:maxLength="4"
             android:theme="@style/TextLabel"
             app:layout_constraintBottom_toTopOf="@+id/guideline50"
             app:layout_constraintEnd_toEndOf="parent"
@@ -66,7 +67,7 @@
                 android:inputType="number"
                 android:maxLength="10"
                 android:padding="16dp"
-                android:text="1441"
+                android:text="1221"
                 android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -114,10 +115,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:visibility="invisible"
             android:layout_marginBottom="16dp"
             android:text="Terms of use. Privacy policy"
             android:textColor="@color/colorPrimary"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

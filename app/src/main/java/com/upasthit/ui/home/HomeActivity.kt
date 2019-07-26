@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
 import com.upasthit.BR
-import com.upasthit.R
 import com.upasthit.data.model.local.db.tables.Standard
 import com.upasthit.data.model.local.db.tables.Student
 import com.upasthit.databinding.ActivityHomeBinding
@@ -22,11 +21,14 @@ import com.upasthit.util.ApplicationConstant
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.app_bar_home.*
 import kotlinx.android.synthetic.main.content_home.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), NavigationView.OnNavigationItemSelectedListener {
+
     override fun navigateToNextScreen() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     var isListViewSelected = true
@@ -37,7 +39,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_home
+        return com.upasthit.R.layout.activity_home
     }
 
     override fun getViewModel(): HomeViewModel {
@@ -55,6 +57,15 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
         val standardId = intent.extras.getString("standardId")
 
         textViewClassSection.text = "Class $selectedStandard"
+
+        val simpleDateFormatForDayOfWeek = SimpleDateFormat("EEEE", Locale.getDefault())
+        val simpleDateFormatForDate = SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault())
+        val date = Date()
+        val dayOfTheWeek = simpleDateFormatForDayOfWeek.format(date)
+        val todayDate = simpleDateFormatForDate.format(date)
+
+        textViewDate.text = todayDate
+        textViewDay.text = dayOfTheWeek
 
         mNavigationButtonRequired = false
         mStudentsAdapter = recyclerViewStudents.adapter as StudentsAdapter
@@ -74,12 +85,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
         imageViewListViewType.setOnClickListener {
             if (isListViewSelected) {
                 isListViewSelected = false
-                imageViewListViewType.setImageResource(R.drawable.ic_view_list)
+                imageViewListViewType.setImageResource(com.upasthit.R.drawable.ic_view_list)
                 constrainListTitle.visibility = View.GONE
                 recyclerViewStudents.layoutManager = GridLayoutManager(this@HomeActivity, AppAndroidUtils.calculateNoOfColumns(this@HomeActivity, 60f))
             } else {
                 isListViewSelected = true
-                imageViewListViewType.setImageResource(R.drawable.ic_view_grid)
+                imageViewListViewType.setImageResource(com.upasthit.R.drawable.ic_view_grid)
                 constrainListTitle.visibility = View.VISIBLE
                 recyclerViewStudents.layoutManager = LinearLayoutManager(this@HomeActivity)
             }
@@ -99,6 +110,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
             if (mViewModel.getSelectedStudentist().isNotEmpty()) {
 
                 val bundle = Bundle()
+                bundle.putString("mobile_number", mobileNumber)
+                bundle.putString("standardId", standardId)
+                bundle.putString("selectedStandardWithSection", selectedStandard)
                 bundle.putParcelableArrayList(ApplicationConstant.ABSENT_STUDENT_DATA, mViewModel.getSelectedStudentist())
                 ActivityManager.startActivityWithBundle(this@HomeActivity, AbsentStudentActivity::class.java, bundle)
                 startFwdAnimation(this@HomeActivity)
@@ -149,7 +163,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.nav_home -> {
+            com.upasthit.R.id.nav_home -> {
                 // Handle the camera action
             }
         }

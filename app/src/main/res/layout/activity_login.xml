@@ -65,7 +65,7 @@
                 android:padding="16dp"
                 android:textSize="18sp"
                 android:gravity="center"
-                android:text="9998823112"
+                android:text="9876543210"
                 android:inputType="phone"
                 android:maxLength="10" />
         </com.google.android.material.textfield.TextInputLayout>
