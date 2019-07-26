@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
 import com.upasthit.BR
+import com.upasthit.data.model.local.db.tables.School
 import com.upasthit.data.model.local.db.tables.Standard
 import com.upasthit.data.model.local.db.tables.Student
 import com.upasthit.databinding.ActivityHomeBinding
@@ -71,6 +72,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
         mStudentsAdapter = recyclerViewStudents.adapter as StudentsAdapter
 
         val realm = mViewModel.mDatabaseRealm.realmInstance
+
+        //fetch school details
+        val mSchool = realm.where(School::class.java).findFirst()
+        setToolbarTitle(mSchool?.name!!)
+
+        //fetch student list
         val studentList = realm.where(Standard::class.java).equalTo("id", standardId).findFirst()?.students
 
         val interestList: MutableList<Student> = ArrayList<Student>()

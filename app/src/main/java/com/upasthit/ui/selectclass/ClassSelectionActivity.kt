@@ -5,6 +5,7 @@ import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProviders
 import com.upasthit.BR
 import com.upasthit.R
+import com.upasthit.data.model.local.db.tables.School
 import com.upasthit.data.model.local.db.tables.Staff
 import com.upasthit.data.model.local.db.tables.Standard
 import com.upasthit.databinding.ActivityClassSelectionBinding
@@ -20,10 +21,6 @@ class ClassSelectionActivity : BaseActivity<ActivityClassSelectionBinding, Class
 
     override fun navigateToNextScreen() {
 
-    }
-
-    init {
-        mToolbarRequired = false
     }
 
     override fun getToolbarTitle(): String? {
@@ -44,6 +41,12 @@ class ClassSelectionActivity : BaseActivity<ActivityClassSelectionBinding, Class
         val mobileNumber = intent.extras.getString("mobile_number")
 
         val realm = mViewModel.mDatabaseRealm.realmInstance
+
+        //fetch school details
+        val mSchool = realm.where(School::class.java).findFirst()
+        setToolbarTitle(mSchool?.name!!)
+
+        //fetch staff details
         val mStaff = realm.where(Staff::class.java).equalTo("mobile_number", mobileNumber).findFirst()
 
         if (mStaff != null) {

@@ -10,6 +10,7 @@ import com.upasthit.BR
 import com.upasthit.R
 import com.upasthit.data.model.api.CreateAttendanceResponse
 import com.upasthit.data.model.api.request.CreateAttendanceRequest
+import com.upasthit.data.model.local.db.tables.School
 import com.upasthit.data.model.local.db.tables.Student
 import com.upasthit.databinding.ActivityAbsentStudentBinding
 import com.upasthit.ui.base.BaseActivity
@@ -47,6 +48,11 @@ class AbsentStudentActivity : BaseActivity<ActivityAbsentStudentBinding, AbsentS
         val mobileNumber = intent.extras.getString("mobile_number")
         val selectedStandard = intent.extras.getString("selectedStandardWithSection")
         val standardId = intent.extras.getString("standardId")
+
+        //fetch school details
+        val realm = mViewModel.mDatabaseRealm.realmInstance
+        val mSchool = realm.where(School::class.java).findFirst()
+        setToolbarTitle(mSchool?.name!!)
 
         textViewClassSection.text = "Class $selectedStandard"
 
