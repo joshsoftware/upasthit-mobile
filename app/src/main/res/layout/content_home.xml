@@ -57,13 +57,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:text="Class-2-d"
                 android:textColor="@android:color/black"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewStudentAbsentTitle"
                 app:layout_constraintEnd_toStartOf="@+id/guideVer30"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/imageViewListViewType"
-                app:layout_constraintTop_toTopOf="@+id/textViewStudentAbsentTitle" />
+                app:layout_constraintTop_toTopOf="@+id/textViewStudentAbsentTitle"
+                tools:text="Class-2-d" />
 
             <TextView
                 android:id="@+id/textViewAbsentStudentCount"
@@ -72,13 +72,13 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="5"
                 android:textColor="@android:color/black"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/guideVer70"
                 app:layout_constraintStart_toStartOf="@+id/guideVer30"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="5" />
 
             <TextView
                 android:id="@+id/textViewDate"
@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="16dp"
-                android:text="15/02/2019"
+                android:text="26-July-2019"
                 android:textColor="@android:color/black"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewAbsentStudentCount"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -102,20 +102,20 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="Students Absent"
                 android:textColor="@android:color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideVer70"
                 app:layout_constraintStart_toStartOf="@+id/guideVer30"
                 app:layout_constraintTop_toBottomOf="@+id/textViewAbsentStudentCount"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="Students Absent" />
 
             <TextView
                 android:id="@+id/textViewDay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="Thursday"
+                android:text="Friday"
                 android:textColor="@android:color/black"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewStudentAbsentTitle"
                 app:layout_constraintEnd_toEndOf="@+id/textViewDate"
@@ -229,7 +229,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.25" />
+                app:layout_constraintGuide_percent="0.0" />
 
             <View
                 android:layout_width="1dp"
@@ -242,12 +242,13 @@
 
             <TextView
                 android:id="@+id/textViewConfirm"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
+                android:gravity="center"
                 android:text="Confirm"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"

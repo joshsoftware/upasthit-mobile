@@ -1,5 +1,6 @@
 package com.upasthit.ui.selectclass
 
+import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProviders
 import com.upasthit.BR
@@ -13,6 +14,9 @@ import com.upasthit.util.ActivityManager
 import kotlinx.android.synthetic.main.activity_class_selection.*
 
 class ClassSelectionActivity : BaseActivity<ActivityClassSelectionBinding, ClassSelectionViewModel>() {
+
+
+    private val standards = ArrayList<Standard>()
 
     override fun navigateToNextScreen() {
 
@@ -46,10 +50,7 @@ class ClassSelectionActivity : BaseActivity<ActivityClassSelectionBinding, Class
 
             textViewTeacherName.text = mStaff.first_name + " " + mStaff.last_name
 
-            val standards = ArrayList<Standard>()
-
             val standardIdFromDb = realm.where(Staff::class.java).equalTo("mobile_number", mobileNumber).findFirst()?.standard_ids
-
 
             standardIdFromDb?.forEach {
                 val standard = realm.where(Standard::class.java).equalTo("id", it.toString()).findFirst()
@@ -66,7 +67,15 @@ class ClassSelectionActivity : BaseActivity<ActivityClassSelectionBinding, Class
         }
 
         bottomLayout.setOnClickListener {
-            ActivityManager.startActivity(this@ClassSelectionActivity, HomeActivity::class.java)
+
+            val bundle = Bundle()
+            bundle.putString("mobile_number", mStaff?.mobile_number)
+            bundle.putString("standardId", standards[spinnerSection.selectedItemPosition].id)
+
+            val selectedStandardWithSection = spinnerClass.selectedItem.toString().replace("Standard ", "").replace(" Section ", "-").trim()
+            bundle.putString("selectedStandardWithSection", selectedStandardWithSection)
+
+            ActivityManager.startActivityWithBundle(this@ClassSelectionActivity, HomeActivity::class.java, bundle)
             startFwdAnimation(this@ClassSelectionActivity)
         }
     }

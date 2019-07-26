@@ -2,10 +2,10 @@ package com.upasthit.ui.home
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
-import com.atcoi.app.ui.base.RecyclerViewHolder
 import com.upasthit.R
 import com.upasthit.data.model.local.db.tables.Student
 import com.upasthit.ui.base.RecyclerBaseAdapter
+import com.upasthit.ui.base.RecyclerViewHolder
 
 class StudentsAdapter(context: Context, list: MutableList<Student>) : RecyclerBaseAdapter() {
     var mDataList: MutableList<Student> = ArrayList()
@@ -32,6 +32,7 @@ class StudentsAdapter(context: Context, list: MutableList<Student>) : RecyclerBa
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
         super.onBindViewHolder(holder, position)
+
         holder.binding.root.setOnClickListener {
             //Play chef profile training video from final step
             clickedPosition.postValue(position)
