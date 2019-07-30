@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
 import com.upasthit.BR
 import com.upasthit.data.model.local.db.tables.School
+import com.upasthit.data.model.local.db.tables.Staff
 import com.upasthit.data.model.local.db.tables.Standard
 import com.upasthit.data.model.local.db.tables.Student
 import com.upasthit.databinding.ActivityHomeBinding
@@ -22,6 +23,7 @@ import com.upasthit.util.ApplicationConstant
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.app_bar_home.*
 import kotlinx.android.synthetic.main.content_home.*
+import kotlinx.android.synthetic.main.nav_header_home.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -70,6 +72,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
 
         mNavigationButtonRequired = false
         mStudentsAdapter = recyclerViewStudents.adapter as StudentsAdapter
+
+        setDrawerUserData(mobileNumber)
 
         val realm = mViewModel.mDatabaseRealm.realmInstance
 
@@ -131,6 +135,16 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
 
     }
 
+    private fun setDrawerUserData(mobileNumber: String) {
+        val header = nav_view.getHeaderView(0)
+
+        //fetch staff details
+        val realm = mViewModel.mDatabaseRealm.realmInstance
+        val mStaff = realm.where(Staff::class.java).equalTo("mobile_number", mobileNumber).findFirst()
+
+        header.textViewUserName.text = mStaff?.first_name + " " + mStaff?.last_name
+        header.textViewUserMobile.text = mStaff?.mobile_number
+    }
 
     override fun initLiveDataObservables() {
         mStudentsAdapter.getClickedItemPosition().observe(this, mClickPositionObserver)
@@ -170,7 +184,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            com.upasthit.R.id.nav_home -> {
+            com.upasthit.R.id.nav_attendance_history -> {
                 // Handle the camera action
             }
         }

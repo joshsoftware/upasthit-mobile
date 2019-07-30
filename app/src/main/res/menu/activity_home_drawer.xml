@@ -5,32 +5,32 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
+            android:id="@+id/nav_school_details"
+            android:icon="@drawable/ic_menu_gallery"
             android:title="School Details" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
+            android:id="@+id/nav_attendance_history"
+            android:icon="@drawable/ic_history_black_24dp"
             android:title="Attendance History" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:id="@+id/nav_sync_content"
+            android:icon="@drawable/ic_sync_black_24dp"
             android:title="Sync Content" />
         <item
-            android:id="@+id/nav_tools"
-            android:icon="@drawable/ic_menu_manage"
+            android:id="@+id/nav_reset_content"
+            android:icon="@drawable/ic_restore_page_black_24dp"
             android:title="Reset Content" />
     </group>
 
     <item android:title="Communicate">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
+                android:id="@+id/nav_about_us"
+                android:icon="@drawable/ic_menu_send"
                 android:title="About Us" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
+                android:id="@+id/nav_contact_us"
+                android:icon="@drawable/ic_contact_mail_black_24dp"
                 android:title="Contact Us" />
         </menu>
     </item>
