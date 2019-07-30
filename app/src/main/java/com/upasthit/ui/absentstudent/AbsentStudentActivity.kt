@@ -1,7 +1,10 @@
 package com.upasthit.ui.absentstudent
 
+import android.Manifest
 import android.os.Parcelable
+import android.telephony.SmsManager
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -16,12 +19,17 @@ import com.upasthit.databinding.ActivityAbsentStudentBinding
 import com.upasthit.ui.base.BaseActivity
 import com.upasthit.util.AppAndroidUtils
 import com.upasthit.util.ApplicationConstant
+import com.upasthit.util.NetworkUtilities
 import kotlinx.android.synthetic.main.activity_absent_student.*
+import pub.devrel.easypermissions.EasyPermissions
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class AbsentStudentActivity : BaseActivity<ActivityAbsentStudentBinding, AbsentStudentViewModel>() {
+
+class AbsentStudentActivity : BaseActivity<ActivityAbsentStudentBinding, AbsentStudentViewModel>(), EasyPermissions.PermissionCallbacks {
+
+    private val EP_SMS_PERMISSION = 1
 
     override fun navigateToNextScreen() {
 
@@ -35,7 +43,7 @@ class AbsentStudentActivity : BaseActivity<ActivityAbsentStudentBinding, AbsentS
         return "Absent student"
     }
 
-    override fun getLayoutId(): Int = R.layout.activity_absent_student
+    override fun getLayoutId(): Int = com.upasthit.R.layout.activity_absent_student
 
     override fun getViewModel(): AbsentStudentViewModel {
         return ViewModelProviders.of(this).get(AbsentStudentViewModel::class.java)
@@ -77,12 +85,12 @@ class AbsentStudentActivity : BaseActivity<ActivityAbsentStudentBinding, AbsentS
         imageViewListViewType.setOnClickListener {
             if (isListViewSelected) {
                 isListViewSelected = false
-                imageViewListViewType.setImageResource(R.drawable.ic_view_list)
+                imageViewListViewType.setImageResource(com.upasthit.R.drawable.ic_view_list)
                 constrainListTitle.visibility = View.GONE
                 recyclerViewAbsentStudents.layoutManager = GridLayoutManager(this@AbsentStudentActivity, AppAndroidUtils.calculateNoOfColumns(this@AbsentStudentActivity, 60f))
             } else {
                 isListViewSelected = true
-                imageViewListViewType.setImageResource(R.drawable.ic_view_grid)
+                imageViewListViewType.setImageResource(com.upasthit.R.drawable.ic_view_grid)
                 constrainListTitle.visibility = View.VISIBLE
                 recyclerViewAbsentStudents.layoutManager = LinearLayoutManager(this@AbsentStudentActivity)
             }
@@ -91,14 +99,22 @@ class AbsentStudentActivity : BaseActivity<ActivityAbsentStudentBinding, AbsentS
 
         textViewConfirm.setOnClickListener {
 
-            val attendanceIds = ArrayList<Int>()
-            absentStudentList.forEach {
-                attendanceIds.add(2)
+            if (NetworkUtilities.isInternet(this)) {
+                val attendanceIds = ArrayList<Int>()
+                absentStudentList.forEach {
+                    attendanceIds.add(2)
+                }
+                val mCreateAttendanceRequest = CreateAttendanceRequest(selectedStandard.substring(0, 1), selectedStandard.substring(2, 3), "1000", todayDate, attendanceIds)
+                mViewModel.createAttendanceRequest(mCreateAttendanceRequest)
+            } else {
+                val permission = arrayOf(Manifest.permission.SEND_SMS)
+
+                if (EasyPermissions.hasPermissions(this, *permission)) {
+                    sendMessage("8956016201", "Test message")
+                } else {
+                    EasyPermissions.requestPermissions(this, getString(R.string.sms_permission), EP_SMS_PERMISSION, *permission)
+                }
             }
-
-            val mCreateAttendanceRequest = CreateAttendanceRequest(selectedStandard.substring(0, 1), selectedStandard.substring(2, 3), "1000", todayDate, attendanceIds)
-
-            mViewModel.createAttendanceRequest(mCreateAttendanceRequest)
         }
     }
 
@@ -112,4 +128,29 @@ class AbsentStudentActivity : BaseActivity<ActivityAbsentStudentBinding, AbsentS
 //        startFwdAnimation(this@AbsentStudentActivity)
         finish()
     }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+        showToast("Go to Permissions to Grant SMS permissions")
+    }
+
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+        sendMessage("8956016201", "Test message")
+    }
+
+    private fun sendMessage(strMobileNo: String, strMessage: String) {
+        try {
+            val smsManager = SmsManager.getDefault()
+            smsManager.sendTextMessage(strMobileNo, null, strMessage, null, null)
+            Toast.makeText(applicationContext, "Your Message Sent", Toast.LENGTH_LONG).show()
+            finish()
+        } catch (ex: Exception) {
+            Toast.makeText(applicationContext, ex.message.toString(), Toast.LENGTH_LONG).show()
+        }
+    }
+
 }
