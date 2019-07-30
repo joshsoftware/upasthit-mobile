@@ -1,7 +1,10 @@
 package com.upasthit.ui.login
 
+import android.app.Activity
+import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.auth.api.credentials.Credential
 import com.upasthit.data.model.local.db.tables.School
 import com.upasthit.data.model.local.db.tables.Staff
 import com.upasthit.data.model.local.db.tables.Standard
@@ -15,10 +18,6 @@ import retrofit2.Response
 class LoginViewModel : BaseViewModel() {
 
     private val mSyncDataResponse = MutableLiveData<SyacUpApiResponse>()
-
-    init {
-//        getSchoolDetails()
-    }
 
     fun getSchoolDetails(mobileNumber: String) {
         setProgress(true)
@@ -57,8 +56,8 @@ class LoginViewModel : BaseViewModel() {
             }
 
             else -> {
-                val errorResponse = ErrorUtils.getGenericErrorMessage()
-                showMessage(errorResponse)
+//                val errorResponse = ErrorUtils.getGenericErrorMessage()
+                showMessage("This mobile number is not registered, Please contact your School Admin.")
             }
         }
         setProgress(false)
@@ -69,4 +68,11 @@ class LoginViewModel : BaseViewModel() {
         setProgress(false)
     }
 
+    fun getSelectorPhoneNumber(requestCode: Int, resultCode: Int, data: Intent?, RC_HINT: Int): String? {
+        if (requestCode == RC_HINT && resultCode == Activity.RESULT_OK) {
+            val credential = data!!.getParcelableExtra<Credential>(Credential.EXTRA_KEY)
+            return credential.id.substring(3)
+        }
+        return null
+    }
 }
