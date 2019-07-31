@@ -1,12 +1,14 @@
 package com.upasthit.util
 
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.upasthit.R
 import com.upasthit.data.model.local.db.tables.Student
 import com.upasthit.ui.absentstudent.AbsentStudentAdapter
 import com.upasthit.ui.home.StudentsAdapter
+import kotlinx.android.synthetic.main.item_student_list.view.*
 
 object BindingUtils {
 
@@ -28,8 +30,12 @@ object BindingUtils {
     fun setStudentItemSelectionStatus(layout: ConstraintLayout, isSelected: Boolean?) {
         if (isSelected!!) {
             layout.setBackgroundResource(R.drawable.hollow_rounded_box_dark_blue)
+            layout.textViewRollNoTitle.setTextColor(ContextCompat.getColor(layout.context, R.color.colorWhite))
+            layout.textViewStudentNameTitle.setTextColor(ContextCompat.getColor(layout.context, R.color.colorWhite))
         } else {
             layout.setBackgroundResource(R.drawable.hollow_rounded_box)
+            layout.textViewRollNoTitle.setTextColor(ContextCompat.getColor(layout.context, R.color.colorBlack))
+            layout.textViewStudentNameTitle.setTextColor(ContextCompat.getColor(layout.context, R.color.colorBlack))
         }
     }
 

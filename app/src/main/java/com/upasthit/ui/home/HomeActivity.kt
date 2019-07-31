@@ -1,5 +1,6 @@
 package com.upasthit.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -34,8 +35,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class HomeActivity : BaseActivity<ActivityHomeBinding, LoginViewModel>(),
-        NavigationView.OnNavigationItemSelectedListener, AppAndroidUtils.OnAlertDialogSelectListener {
+class HomeActivity : BaseActivity<ActivityHomeBinding, LoginViewModel>(), NavigationView.OnNavigationItemSelectedListener, AppAndroidUtils.OnAlertDialogSelectListener {
 
     override fun navigateToNextScreen() {
     }
@@ -132,14 +132,21 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, LoginViewModel>(),
                 bundle.putString("standardId", standardId)
                 bundle.putString("selectedStandardWithSection", selectedStandard)
                 bundle.putParcelableArrayList(ApplicationConstant.ABSENT_STUDENT_DATA, mViewModel.getSelectedStudentList())
-                ActivityManager.startActivityWithBundle(this@HomeActivity, AbsentStudentActivity::class.java, bundle)
+                ActivityManager.startActivityForResultWithBundle(this@HomeActivity, AbsentStudentActivity::class.java, 1, bundle)
                 startFwdAnimation(this@HomeActivity)
 
             } else {
                 showToast("Please select absent student")
             }
         }
+    }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == 1 && requestCode == 1) {
+            setResult(1)
+            finish()
+        }
     }
 
     private fun setDrawerUserData(mobileNumber: String) {

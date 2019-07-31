@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.upasthit.BR
 import com.upasthit.R
-import com.upasthit.data.model.api.response.CreateAttendanceResponse
 import com.upasthit.data.model.api.request.CreateAttendanceRequest
+import com.upasthit.data.model.api.response.CreateAttendanceResponse
 import com.upasthit.data.model.local.db.tables.School
 import com.upasthit.data.model.local.db.tables.Student
 import com.upasthit.databinding.ActivityAbsentStudentBinding
@@ -105,7 +105,7 @@ class AbsentStudentActivity : BaseActivity<ActivityAbsentStudentBinding, AbsentS
                 absentStudentList.forEach {
                     attendanceIds.add(2)
                 }
-                val mCreateAttendanceRequest = CreateAttendanceRequest(selectedStandard.substring(0, 1), selectedStandard.substring(2, 3), "1000", todayDate, attendanceIds)
+                val mCreateAttendanceRequest = CreateAttendanceRequest(selectedStandard.substring(0, 1), selectedStandard.substring(4, 5), "1000", todayDate, attendanceIds)
                 mViewModel.createAttendanceRequest(mCreateAttendanceRequest)
             } else {
                 val permission = arrayOf(Manifest.permission.SEND_SMS)
@@ -126,10 +126,12 @@ class AbsentStudentActivity : BaseActivity<ActivityAbsentStudentBinding, AbsentS
 
     private val attendanceObserver: Observer<CreateAttendanceResponse> = Observer {
         showToast(it.message)
+        setResult(1)
         finish()
     }
 
     private val sendMessageObserver: Observer<String> = Observer {
+        setResult(1)
         finish()
     }
 
