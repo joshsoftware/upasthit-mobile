@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
 import com.upasthit.BR
 import com.upasthit.R
+import com.upasthit.data.model.api.response.SyncUpApiResponse
 import com.upasthit.data.model.local.db.tables.School
 import com.upasthit.data.model.local.db.tables.Staff
 import com.upasthit.data.model.local.db.tables.Standard
@@ -18,9 +19,12 @@ import com.upasthit.data.model.local.db.tables.Student
 import com.upasthit.databinding.ActivityHomeBinding
 import com.upasthit.ui.absentstudent.AbsentStudentActivity
 import com.upasthit.ui.base.BaseActivity
+import com.upasthit.ui.login.LoginActivity
+import com.upasthit.ui.login.LoginViewModel
 import com.upasthit.util.ActivityManager
 import com.upasthit.util.AppAndroidUtils
 import com.upasthit.util.ApplicationConstant
+import com.upasthit.util.NetworkUtilities
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.app_bar_home.*
 import kotlinx.android.synthetic.main.content_home.*
@@ -30,12 +34,14 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), NavigationView.OnNavigationItemSelectedListener {
+class HomeActivity : BaseActivity<ActivityHomeBinding, LoginViewModel>(),
+        NavigationView.OnNavigationItemSelectedListener, AppAndroidUtils.OnAlertDialogSelectListener {
 
     override fun navigateToNextScreen() {
     }
 
-    var isListViewSelected = true
+    private var mobileNumber = ""
+    private var isListViewSelected = true
     private lateinit var mStudentsAdapter: StudentsAdapter
 
     override fun getToolbarTitle(): String? {
@@ -46,8 +52,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
         return R.layout.activity_home
     }
 
-    override fun getViewModel(): HomeViewModel {
-        return ViewModelProviders.of(this).get(HomeViewModel::class.java)
+    override fun getViewModel(): LoginViewModel {
+        return ViewModelProviders.of(this).get(LoginViewModel::class.java)
     }
 
     override fun getBindingVariable(): Int {
@@ -56,7 +62,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
 
     override fun init() {
 
-        val mobileNumber = intent.extras.getString("mobile_number")
+        mobileNumber = intent.extras.getString("mobile_number")
         val selectedStandard = intent.extras.getString("selectedStandardWithSection")
         val standardId = intent.extras.getString("standardId")
 
@@ -119,13 +125,13 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
         nav_view.setNavigationItemSelectedListener(this)
 
         bottomLayout.setOnClickListener {
-            if (mViewModel.getSelectedStudentist().isNotEmpty()) {
+            if (mViewModel.getSelectedStudentList().isNotEmpty()) {
 
                 val bundle = Bundle()
                 bundle.putString("mobile_number", mobileNumber)
                 bundle.putString("standardId", standardId)
                 bundle.putString("selectedStandardWithSection", selectedStandard)
-                bundle.putParcelableArrayList(ApplicationConstant.ABSENT_STUDENT_DATA, mViewModel.getSelectedStudentist())
+                bundle.putParcelableArrayList(ApplicationConstant.ABSENT_STUDENT_DATA, mViewModel.getSelectedStudentList())
                 ActivityManager.startActivityWithBundle(this@HomeActivity, AbsentStudentActivity::class.java, bundle)
                 startFwdAnimation(this@HomeActivity)
 
@@ -149,6 +155,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
 
     override fun initLiveDataObservables() {
         mStudentsAdapter.getClickedItemPosition().observe(this, mClickPositionObserver)
+        mViewModel.getSchoolDetailsResponse().observe(this, loginResponseObserver)
     }
 
     private val mClickPositionObserver = Observer<Int> {
@@ -182,7 +189,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
 
             }
             R.id.nav_sync_content -> {
-
+                AppAndroidUtils.openAlertDialog(this,
+                        getString(R.string.app_name),
+                        "Do you really want to sync your school data",
+                        "YES", "Not Now", this)
             }
             R.id.nav_reset_content -> {
 
@@ -190,5 +200,18 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
         }
         drawer_layout.closeDrawer(GravityCompat.END)
         return true
+    }
+
+    override fun onPositiveButtonClick() {
+        if (NetworkUtilities.isInternet(this).not()) {
+            showToast(getString(R.string.error_no_internet_connection))
+            return
+        }
+        mViewModel.getSchoolDetails(mobileNumber)
+    }
+
+    private val loginResponseObserver: Observer<SyncUpApiResponse> = Observer {
+        ActivityManager.startFreshActivityClearStack(this, LoginActivity::class.java)
+        finish()
     }
 }

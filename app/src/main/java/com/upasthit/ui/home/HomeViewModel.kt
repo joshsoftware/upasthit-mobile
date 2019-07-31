@@ -4,7 +4,7 @@ import androidx.databinding.Bindable
 import com.upasthit.BR
 import com.upasthit.data.model.local.db.tables.Student
 import com.upasthit.ui.base.BaseViewModel
-import java.util.ArrayList
+import java.util.*
 
 class HomeViewModel : BaseViewModel() {
 
@@ -21,7 +21,6 @@ class HomeViewModel : BaseViewModel() {
         notifyPropertyChanged(BR._all)
     }
 
-
     init {
         mDataList.add(Student())
         mDataList.add(Student())
@@ -29,7 +28,7 @@ class HomeViewModel : BaseViewModel() {
         notifyPropertyChanged(BR._all)
     }
 
-    fun getSelectedStudentist(): ArrayList<Student> {
+    fun getSelectedStudentList(): ArrayList<Student> {
         val students = ArrayList<Student>()
         for (i in 0 until mDataList.size) {
             if (mDataList[i].isSelected!!) {

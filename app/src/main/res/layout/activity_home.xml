@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.upasthit.ui.home.HomeViewModel" />
+            type="com.upasthit.ui.login.LoginViewModel" />
     </data>
 
     <androidx.drawerlayout.widget.DrawerLayout
