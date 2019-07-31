@@ -17,22 +17,13 @@
             android:icon="@drawable/ic_sync_black_24dp"
             android:title="Sync Content" />
         <item
-            android:id="@+id/nav_reset_content"
-            android:icon="@drawable/ic_restore_page_black_24dp"
-            android:title="Reset Content" />
+            android:id="@+id/nav_about_app"
+            android:icon="@drawable/ic_info_black_24dp"
+            android:title="About App" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_power_settings_new_black_24dp"
+            android:title="Logout" />
     </group>
-
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_about_us"
-                android:icon="@drawable/ic_menu_send"
-                android:title="About Us" />
-            <item
-                android:id="@+id/nav_contact_us"
-                android:icon="@drawable/ic_contact_mail_black_24dp"
-                android:title="Contact Us" />
-        </menu>
-    </item>
 
 </menu>

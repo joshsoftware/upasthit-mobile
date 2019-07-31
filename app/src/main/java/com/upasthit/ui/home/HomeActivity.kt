@@ -183,19 +183,25 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, LoginViewModel>(),
 
         when (item.itemId) {
             R.id.nav_attendance_history -> {
-
+                showToast("Attendance History Clicked")
             }
             R.id.nav_school_details -> {
-
+                showToast("School Details Clicked")
             }
             R.id.nav_sync_content -> {
                 AppAndroidUtils.openAlertDialog(this,
                         getString(R.string.app_name),
-                        "Do you really want to sync your school data",
+                        "Do you really want to sync school data ?",
                         "YES", "Not Now", this)
             }
-            R.id.nav_reset_content -> {
-
+            R.id.nav_about_app -> {
+                showToast("About Us Clicked")
+            }
+            R.id.nav_logout -> {
+                AppAndroidUtils.openAlertDialog(this,
+                        getString(R.string.app_name),
+                        "Are you sure want to log out?",
+                        "YES", "Cancel", this)
             }
         }
         drawer_layout.closeDrawer(GravityCompat.END)
