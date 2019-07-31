@@ -27,6 +27,8 @@
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
 
+    <string name="error_no_internet_connection">You are Offline !!</string>
+
     <string name="label_sms_permission">This app needs SMS permission to send Messages</string>
     <string name="label_sms_permission_settings"><![CDATA[Tap SETTING, go to App info > Permissions, then allow SMS Permission and try again]]></string>
     <string name="title_sms_permission_settings">SMS Permission required!!</string>

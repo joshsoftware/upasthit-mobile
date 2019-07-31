@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
 import com.upasthit.BR
+import com.upasthit.R
 import com.upasthit.data.model.local.db.tables.School
 import com.upasthit.data.model.local.db.tables.Staff
 import com.upasthit.data.model.local.db.tables.Standard
@@ -42,7 +43,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
     }
 
     override fun getLayoutId(): Int {
-        return com.upasthit.R.layout.activity_home
+        return R.layout.activity_home
     }
 
     override fun getViewModel(): HomeViewModel {
@@ -167,25 +168,24 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
         if (drawer_layout.isDrawerOpen(GravityCompat.END)) {
             drawer_layout.closeDrawer(GravityCompat.END)
         } else {
-//            val builder = AlertDialog.Builder(this@HomeActivity)
-//            builder.setTitle(R.string.app_name)
-//            builder.setIcon(R.mipmap.ic_launcher)
-//            builder.setMessage("Do you want to exit?")
-//                    .setCancelable(false)
-//                    .setPositiveButton("Yes") { dialog, id -> finish() }
-//                    .setNegativeButton("No") { dialog, id -> dialog.cancel() }
-//            val alert = builder.create()
-//            alert.show()
             super.onBackPressed()
-
         }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        // Handle navigation view item clicks here.
+
         when (item.itemId) {
-            com.upasthit.R.id.nav_attendance_history -> {
-                // Handle the camera action
+            R.id.nav_attendance_history -> {
+
+            }
+            R.id.nav_school_details -> {
+
+            }
+            R.id.nav_sync_content -> {
+
+            }
+            R.id.nav_reset_content -> {
+
             }
         }
         drawer_layout.closeDrawer(GravityCompat.END)

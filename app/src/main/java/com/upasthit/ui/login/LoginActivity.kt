@@ -14,6 +14,7 @@ import com.upasthit.data.model.local.db.tables.SyacUpApiResponse
 import com.upasthit.databinding.ActivityLoginBinding
 import com.upasthit.ui.base.BaseActivity
 import com.upasthit.util.ActivityManager
+import com.upasthit.util.NetworkUtilities
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
@@ -59,6 +60,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
         if (mStaff != null) {
             switchToNextScreen(mStaff)
         } else {
+            if (NetworkUtilities.isInternet(this)) {
+                showToast(getString(R.string.error_no_internet_connection))
+                return
+            }
             mViewModel.getSchoolDetails(mobileNumber)
         }
     }
@@ -82,24 +87,16 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
     }
 
     private fun phoneSelectorDialog() {
-
-        mCredentialsApiClient = GoogleApiClient.Builder(this)
-                .addApi(Auth.CREDENTIALS_API)
-                .build()
-
+        mCredentialsApiClient = GoogleApiClient.Builder(this).addApi(Auth.CREDENTIALS_API).build()
         return requestHint()
-
     }
 
     private fun requestHint() {
 
         val hintRequest = HintRequest.Builder().setPhoneNumberIdentifierSupported(true).build()
-
         try {
             val googleApiClient = GoogleApiClient.Builder(this).addApi(Auth.CREDENTIALS_API).build()
-
             val pendingIntent = Auth.CredentialsApi.getHintPickerIntent(googleApiClient, hintRequest)
-
             startIntentSenderForResult(pendingIntent.intentSender, RC_HINT, null, 0, 0, 0)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -108,14 +105,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
-        textInputEditTextMobileNo.setText(
-                mViewModel.getSelectorPhoneNumber(
-                        requestCode,
-                        resultCode,
-                        data,
-                        RC_HINT
-                )
-        )
+        textInputEditTextMobileNo.setText(mViewModel.getSelectorPhoneNumber(requestCode, resultCode, data, RC_HINT))
     }
 }

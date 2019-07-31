@@ -65,7 +65,7 @@ class AbsentStudentViewModel : BaseViewModel() {
             showMessage(sentSmsLabel)
             sendMessageResponse.postValue(sentSmsLabel)
         } catch (ex: Exception) {
-            showMessage("Unable to update attendance")
+            showMessage("Unable to update attendance. Try again later")
         }
     }
 
