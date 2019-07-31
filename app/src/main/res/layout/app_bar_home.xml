@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.upasthit.ui.login.LoginViewModel" />
+            type="com.upasthit.ui.home.HomeViewModel" />
 
     </data>
 

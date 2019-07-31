@@ -20,8 +20,8 @@ import com.upasthit.data.model.local.db.tables.Student
 import com.upasthit.databinding.ActivityHomeBinding
 import com.upasthit.ui.absentstudent.AbsentStudentActivity
 import com.upasthit.ui.base.BaseActivity
+import com.upasthit.ui.details.SchoolDetailsActivity
 import com.upasthit.ui.login.LoginActivity
-import com.upasthit.ui.login.LoginViewModel
 import com.upasthit.util.ActivityManager
 import com.upasthit.util.AppAndroidUtils
 import com.upasthit.util.ApplicationConstant
@@ -35,7 +35,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class HomeActivity : BaseActivity<ActivityHomeBinding, LoginViewModel>(), NavigationView.OnNavigationItemSelectedListener, AppAndroidUtils.OnAlertDialogSelectListener {
+class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), NavigationView.OnNavigationItemSelectedListener, AppAndroidUtils.OnAlertDialogSelectListener {
 
     override fun navigateToNextScreen() {
     }
@@ -52,8 +52,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, LoginViewModel>(), Naviga
         return R.layout.activity_home
     }
 
-    override fun getViewModel(): LoginViewModel {
-        return ViewModelProviders.of(this).get(LoginViewModel::class.java)
+    override fun getViewModel(): HomeViewModel {
+        return ViewModelProviders.of(this).get(HomeViewModel::class.java)
     }
 
     override fun getBindingVariable(): Int {
@@ -193,22 +193,19 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, LoginViewModel>(), Naviga
                 showToast("Attendance History Clicked")
             }
             R.id.nav_school_details -> {
-                showToast("School Details Clicked")
+                val bundle = Bundle()
+                bundle.putString("mobile_number", mobileNumber)
+                ActivityManager.startActivityWithBundle(this, SchoolDetailsActivity::class.java, bundle)
             }
             R.id.nav_sync_content -> {
                 AppAndroidUtils.openAlertDialog(this,
-                        getString(R.string.app_name),
-                        "Do you really want to sync school data ?",
-                        "YES", "Not Now", this)
+                        getString(R.string.app_name), "Do you really want to sync school data ?", "YES", "Not Now", this)
             }
             R.id.nav_about_app -> {
                 showToast("About Us Clicked")
             }
             R.id.nav_logout -> {
-                AppAndroidUtils.openAlertDialog(this,
-                        getString(R.string.app_name),
-                        "Are you sure want to log out?",
-                        "YES", "Cancel", this)
+                AppAndroidUtils.openAlertDialog(this, getString(R.string.app_name), "Are you sure want to log out?", "YES", "Cancel", this)
             }
         }
         drawer_layout.closeDrawer(GravityCompat.END)

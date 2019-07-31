@@ -103,7 +103,7 @@ class AbsentStudentActivity : BaseActivity<ActivityAbsentStudentBinding, AbsentS
             if (NetworkUtilities.isInternet(this)) {
                 val attendanceIds = ArrayList<Int>()
                 absentStudentList.forEach {
-                    attendanceIds.add(2)
+                    attendanceIds.add(it.roll_no!!.toInt())
                 }
                 val mCreateAttendanceRequest = CreateAttendanceRequest(selectedStandard.substring(0, 1), selectedStandard.substring(4, 5), "1000", todayDate, attendanceIds)
                 mViewModel.createAttendanceRequest(mCreateAttendanceRequest)

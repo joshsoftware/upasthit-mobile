@@ -2,24 +2,20 @@ package com.upasthit.ui.login
 
 import android.app.Activity
 import android.content.Intent
-import androidx.databinding.Bindable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.auth.api.credentials.Credential
-import com.upasthit.BR
 import com.upasthit.data.model.api.response.SyncUpApiResponse
 import com.upasthit.data.model.local.db.tables.School
 import com.upasthit.data.model.local.db.tables.Staff
 import com.upasthit.data.model.local.db.tables.Standard
-import com.upasthit.data.model.local.db.tables.Student
 import com.upasthit.data.network.ErrorUtils
 import com.upasthit.ui.base.BaseViewModel
 import com.upasthit.util.DebugLog
 import retrofit2.Response
-import java.util.*
 
 
-class LoginViewModel : BaseViewModel() {
+open class LoginViewModel : BaseViewModel() {
 
     private val mSyncDataResponse = MutableLiveData<SyncUpApiResponse>()
 
@@ -78,35 +74,5 @@ class LoginViewModel : BaseViewModel() {
             return credential.id.substring(3)
         }
         return null
-    }
-
-    var mDataList: MutableList<Student> = ArrayList()
-
-    @Bindable
-    fun getStudentList(): List<Student> {
-        return mDataList
-    }
-
-    fun setStudentList(studentList: MutableList<Student>) {
-        mDataList.clear()
-        mDataList.addAll(studentList)
-        notifyPropertyChanged(BR._all)
-    }
-
-    init {
-        mDataList.add(Student())
-        mDataList.add(Student())
-        mDataList.add(Student())
-        notifyPropertyChanged(BR._all)
-    }
-
-    fun getSelectedStudentList(): ArrayList<Student> {
-        val students = ArrayList<Student>()
-        for (i in 0 until mDataList.size) {
-            if (mDataList[i].isSelected!!) {
-                students.add(mDataList[i])
-            }
-        }
-        return students
     }
 }

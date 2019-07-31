@@ -3,10 +3,10 @@ package com.upasthit.ui.home
 import androidx.databinding.Bindable
 import com.upasthit.BR
 import com.upasthit.data.model.local.db.tables.Student
-import com.upasthit.ui.base.BaseViewModel
+import com.upasthit.ui.login.LoginViewModel
 import java.util.*
 
-class HomeViewModel : BaseViewModel() {
+class HomeViewModel : LoginViewModel() {
 
     var mDataList: MutableList<Student> = ArrayList()
 

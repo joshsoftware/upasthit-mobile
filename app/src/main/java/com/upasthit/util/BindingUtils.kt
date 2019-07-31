@@ -6,7 +6,9 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.upasthit.R
 import com.upasthit.data.model.local.db.tables.Student
+import com.upasthit.data.model.local.db.tables.Timing
 import com.upasthit.ui.absentstudent.AbsentStudentAdapter
+import com.upasthit.ui.details.SchoolTimingAdapter
 import com.upasthit.ui.home.StudentsAdapter
 import kotlinx.android.synthetic.main.item_student_list.view.*
 
@@ -48,6 +50,18 @@ object BindingUtils {
         } else {
             val taskAdapter = AbsentStudentAdapter(recyclerView.context, list)
 //            recyclerView.addItemDecoration(ItemOffsetDecoration(recyclerView.context, R.dimen.margin_5))
+            recyclerView.adapter = taskAdapter
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("timingList")
+    fun setTimingList(recyclerView: RecyclerView, list: MutableList<Timing>) {
+        if (recyclerView.adapter != null) {
+            val mAdapter = recyclerView.adapter as SchoolTimingAdapter
+            mAdapter.updateData(list)
+        } else {
+            val taskAdapter = SchoolTimingAdapter(recyclerView.context, list)
             recyclerView.adapter = taskAdapter
         }
     }
