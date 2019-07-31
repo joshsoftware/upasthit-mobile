@@ -1,5 +1,6 @@
 package com.upasthit.ui.absentstudent
 
+import android.telephony.SmsManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.upasthit.BR
@@ -13,8 +14,10 @@ import retrofit2.Response
 class AbsentStudentViewModel : BaseViewModel() {
 
     var mDataList: MutableList<Student> = ArrayList()
+    val sentSmsLabel = "Attendance marked successfully"
 
     private val mCreateAttendanceResponse = MutableLiveData<CreateAttendanceResponse>()
+    private val sendMessageResponse = MutableLiveData<String>()
 
     fun setAbsentStudentList(absentStudentList: ArrayList<Student>) {
         mDataList.clear()
@@ -53,5 +56,20 @@ class AbsentStudentViewModel : BaseViewModel() {
     fun handleApiErrors(errorMessage: String) {
         showMessage(errorMessage)
         setProgress(false)
+    }
+
+    fun sendMessage(strMobileNo: String, strMessage: String) {
+        try {
+            val smsManager = SmsManager.getDefault()
+            smsManager.sendTextMessage(strMobileNo, null, strMessage, null, null)
+            showMessage(sentSmsLabel)
+            sendMessageResponse.postValue(sentSmsLabel)
+        } catch (ex: Exception) {
+            showMessage("Unable to update attendance")
+        }
+    }
+
+    fun getSendMessageResponse(): LiveData<String> {
+        return sendMessageResponse
     }
 }

@@ -300,4 +300,25 @@ object AppAndroidUtils {
         val screenWidthDp = displayMetrics.widthPixels / displayMetrics.density
         return (screenWidthDp / columnWidthDp + 0.5).toInt()
     }
+
+    fun openAlertDialog(context: Activity, title: String, msg: String,
+                        positiveButton: String, negativeButton: String, listener: OnAlertDialogSelectListener): AlertDialog {
+        val alertDialog = AlertDialog.Builder(context).create()
+        alertDialog.setTitle(title)
+        alertDialog.setMessage(msg)
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, positiveButton) { _, _ ->
+            listener.onPositiveButtonClick()
+        }
+        alertDialog.setCancelable(false)
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, negativeButton) { _, _ ->
+            alertDialog.dismiss()
+        }
+        alertDialog.show()
+
+        return alertDialog
+    }
+
+    interface OnAlertDialogSelectListener {
+        fun onPositiveButtonClick()
+    }
 }

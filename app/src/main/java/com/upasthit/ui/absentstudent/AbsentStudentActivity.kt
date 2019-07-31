@@ -1,10 +1,11 @@
 package com.upasthit.ui.absentstudent
 
 import android.Manifest
+import android.content.Intent
+import android.net.Uri
 import android.os.Parcelable
-import android.telephony.SmsManager
+import android.provider.Settings
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -27,7 +28,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class AbsentStudentActivity : BaseActivity<ActivityAbsentStudentBinding, AbsentStudentViewModel>(), EasyPermissions.PermissionCallbacks {
+class AbsentStudentActivity : BaseActivity<ActivityAbsentStudentBinding, AbsentStudentViewModel>(), EasyPermissions.PermissionCallbacks, AppAndroidUtils.OnAlertDialogSelectListener {
 
     private val EP_SMS_PERMISSION = 1
 
@@ -110,9 +111,9 @@ class AbsentStudentActivity : BaseActivity<ActivityAbsentStudentBinding, AbsentS
                 val permission = arrayOf(Manifest.permission.SEND_SMS)
 
                 if (EasyPermissions.hasPermissions(this, *permission)) {
-                    sendMessage("8956016201", "Test message")
+                    mViewModel.sendMessage("8956016201", "Test message")
                 } else {
-                    EasyPermissions.requestPermissions(this, getString(R.string.sms_permission), EP_SMS_PERMISSION, *permission)
+                    EasyPermissions.requestPermissions(this, getString(R.string.label_sms_permission), EP_SMS_PERMISSION, *permission)
                 }
             }
         }
@@ -120,12 +121,15 @@ class AbsentStudentActivity : BaseActivity<ActivityAbsentStudentBinding, AbsentS
 
     override fun initLiveDataObservables() {
         mViewModel.getAttendanceResponse().observe(this, attendanceObserver)
+        mViewModel.getSendMessageResponse().observe(this, sendMessageObserver)
     }
 
     private val attendanceObserver: Observer<CreateAttendanceResponse> = Observer {
         showToast(it.message)
-//        ActivityManager.startFreshActivityClearStack(this@AbsentStudentActivity, HomeActivity::class.java)
-//        startFwdAnimation(this@AbsentStudentActivity)
+        finish()
+    }
+
+    private val sendMessageObserver: Observer<String> = Observer {
         finish()
     }
 
@@ -135,22 +139,24 @@ class AbsentStudentActivity : BaseActivity<ActivityAbsentStudentBinding, AbsentS
     }
 
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
-        showToast("Go to Permissions to Grant SMS permissions")
+        AppAndroidUtils.openAlertDialog(this,
+                getString(R.string.title_sms_permission_settings),
+                getString(R.string.label_sms_permission_settings),
+                "SETTINGS", "", this)
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
-        sendMessage("8956016201", "Test message")
+        mViewModel.sendMessage("8956016201", "Test message")
     }
 
-    private fun sendMessage(strMobileNo: String, strMessage: String) {
-        try {
-            val smsManager = SmsManager.getDefault()
-            smsManager.sendTextMessage(strMobileNo, null, strMessage, null, null)
-            Toast.makeText(applicationContext, "Your Message Sent", Toast.LENGTH_LONG).show()
-            finish()
-        } catch (ex: Exception) {
-            Toast.makeText(applicationContext, ex.message.toString(), Toast.LENGTH_LONG).show()
-        }
+    override fun onPositiveButtonClick() {
+        openSettings()
     }
 
+    private fun openSettings() {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+        val uri = Uri.fromParts("package", packageName, null)
+        intent.data = uri
+        startActivityForResult(intent, 101)
+    }
 }
