@@ -12,6 +12,6 @@ open class Standard(
 ) : RealmObject() {
 
     override fun toString(): String {
-        return "Standard $standard Section $section"
+        return "$standard - $section"
     }
 }

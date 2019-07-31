@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.upasthit.BR
 import com.upasthit.R
-import com.upasthit.data.model.api.CreateAttendanceResponse
+import com.upasthit.data.model.api.response.CreateAttendanceResponse
 import com.upasthit.data.model.api.request.CreateAttendanceRequest
 import com.upasthit.data.model.local.db.tables.School
 import com.upasthit.data.model.local.db.tables.Student

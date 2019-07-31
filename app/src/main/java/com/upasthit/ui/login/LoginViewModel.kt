@@ -8,7 +8,7 @@ import com.google.android.gms.auth.api.credentials.Credential
 import com.upasthit.data.model.local.db.tables.School
 import com.upasthit.data.model.local.db.tables.Staff
 import com.upasthit.data.model.local.db.tables.Standard
-import com.upasthit.data.model.local.db.tables.SyacUpApiResponse
+import com.upasthit.data.model.api.response.SyncUpApiResponse
 import com.upasthit.data.network.ErrorUtils
 import com.upasthit.ui.base.BaseViewModel
 import com.upasthit.util.DebugLog
@@ -17,19 +17,19 @@ import retrofit2.Response
 
 class LoginViewModel : BaseViewModel() {
 
-    private val mSyncDataResponse = MutableLiveData<SyacUpApiResponse>()
+    private val mSyncDataResponse = MutableLiveData<SyncUpApiResponse>()
 
     fun getSchoolDetails(mobileNumber: String) {
         setProgress(true)
         mDisposable = mNetworkClient.getSynData(mobileNumber, this)!!
     }
 
-    fun getSchoolDetailsResponse(): LiveData<SyacUpApiResponse> {
+    fun getSchoolDetailsResponse(): LiveData<SyncUpApiResponse> {
         return mSyncDataResponse
     }
 
     //Handle login response
-    fun handleSyncDataResponse(response: Response<SyacUpApiResponse>?) {
+    fun handleSyncDataResponse(response: Response<SyncUpApiResponse>?) {
         when {
             response!!.isSuccessful -> {
                 mSyncDataResponse.postValue(response.body())

@@ -4,7 +4,7 @@ import android.telephony.SmsManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.upasthit.BR
-import com.upasthit.data.model.api.CreateAttendanceResponse
+import com.upasthit.data.model.api.response.CreateAttendanceResponse
 import com.upasthit.data.model.api.request.CreateAttendanceRequest
 import com.upasthit.data.model.local.db.tables.Student
 import com.upasthit.data.network.ErrorUtils

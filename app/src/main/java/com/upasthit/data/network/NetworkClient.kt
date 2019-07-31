@@ -9,6 +9,7 @@ import io.reactivex.schedulers.Schedulers
 import java.io.IOException
 
 class NetworkClient constructor(networkServices: NetworkServices?) {
+
     var mNetworkServices: NetworkServices? = null
     val internetError: String = "Oops, something went wrong. Please try again after some time."
 
@@ -17,10 +18,10 @@ class NetworkClient constructor(networkServices: NetworkServices?) {
     }
 
     private fun getFailureMessage(t: Throwable?): String {
-        if (t is IOException) {
-            return internetError
+        return if (t is IOException) {
+            internetError
         } else {
-            return t?.message.toString()
+            t?.message.toString()
         }
     }
 
@@ -28,8 +29,7 @@ class NetworkClient constructor(networkServices: NetworkServices?) {
      * To call api for getting school data
      */
 
-    fun getSynData(mobileNo: String,
-                   mViewModel: LoginViewModel): Disposable? {
+    fun getSynData(mobileNo: String, mViewModel: LoginViewModel): Disposable? {
         return mNetworkServices?.syncData(mobileNo)
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())
@@ -40,6 +40,9 @@ class NetworkClient constructor(networkServices: NetworkServices?) {
                 })
     }
 
+    /**
+     * To call api for mark attendance
+     */
     fun createAttendance(mCreateDeleteInterestRequest: CreateAttendanceRequest, mViewModel: AbsentStudentViewModel): Disposable? {
         return mNetworkServices?.createAttendance(mCreateDeleteInterestRequest)
                 ?.observeOn(AndroidSchedulers.mainThread())

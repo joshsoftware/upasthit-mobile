@@ -9,8 +9,8 @@ import com.google.android.gms.auth.api.credentials.HintRequest
 import com.google.android.gms.common.api.GoogleApiClient
 import com.upasthit.BR
 import com.upasthit.R
+import com.upasthit.data.model.api.response.SyncUpApiResponse
 import com.upasthit.data.model.local.db.tables.Staff
-import com.upasthit.data.model.local.db.tables.SyacUpApiResponse
 import com.upasthit.databinding.ActivityLoginBinding
 import com.upasthit.ui.base.BaseActivity
 import com.upasthit.util.ActivityManager
@@ -60,7 +60,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
         if (mStaff != null) {
             switchToNextScreen(mStaff)
         } else {
-            if (NetworkUtilities.isInternet(this)) {
+            if (NetworkUtilities.isInternet(this).not()) {
                 showToast(getString(R.string.error_no_internet_connection))
                 return
             }
@@ -72,7 +72,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
         mViewModel.getSchoolDetailsResponse().observe(this, loginResponseObserver)
     }
 
-    private val loginResponseObserver: Observer<SyacUpApiResponse> = Observer {
+    private val loginResponseObserver: Observer<SyncUpApiResponse> = Observer {
         checkForMobileNoPresentInLocalDatabase(textInputEditTextMobileNo.text.toString())
     }
 
