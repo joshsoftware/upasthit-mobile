@@ -28,11 +28,11 @@
             android:layout_marginStart="8dp"
             android:layout_marginBottom="8dp"
             android:text="School Timings"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@+id/guidelineHor25"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_layout" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineHor25"
@@ -44,6 +44,80 @@
             app:layout_constraintGuide_percent="0.08"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintTop_toBottomOf="@+id/guidelineHor25" />
+
+        <LinearLayout
+            android:id="@+id/timingListHeaderLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/textViewEnterMobileTitle">
+
+            <TextView
+                android:id="@+id/textViewWeekDay"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".33"
+                android:gravity="center_vertical|center"
+                android:padding="10dp"
+                android:text="Day"
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".005"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideVer30"
+                app:layout_constraintStart_toStartOf="@+id/guideVer30"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewOpenTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".33"
+                android:gravity="center_vertical|center"
+                android:padding="8dp"
+                android:text="Open Time"
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".005"
+                android:background="@android:color/darker_gray"
+                android:padding="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideVer30"
+                app:layout_constraintStart_toStartOf="@+id/guideVer30"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewCloseTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".33"
+                android:gravity="center_vertical|center"
+                android:padding="8dp"
+                android:text="Close Time"
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintTop_toBottomOf="@+id/timingListHeaderLayout" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewSchoolTiming"
             android:layout_width="0dp"
@@ -53,7 +127,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewEnterMobileTitle"
+            app:layout_constraintTop_toBottomOf="@+id/timingListHeaderLayout"
             app:timingList="@{viewModel.mDataList}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
