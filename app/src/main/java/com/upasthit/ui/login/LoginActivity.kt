@@ -13,6 +13,7 @@ import com.upasthit.data.model.api.response.SyncUpApiResponse
 import com.upasthit.data.model.local.db.tables.Staff
 import com.upasthit.databinding.ActivityLoginBinding
 import com.upasthit.ui.base.BaseActivity
+import com.upasthit.ui.selectclass.ClassSelectionActivity
 import com.upasthit.util.ActivityManager
 import com.upasthit.util.NetworkUtilities
 import kotlinx.android.synthetic.main.activity_login.*
@@ -47,11 +48,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
         phoneSelectorDialog()
 
         buttonSignIn.setOnClickListener {
-            checkForMobileNoPresentInLocalDatabase(textInputEditTextMobileNo.text.toString())
+            checkForMobileNoPresentInLocalDatabase(textInputEditTextMobileNo.text.toString(), textInputEditTextPin.text.toString())
         }
     }
 
-    private fun checkForMobileNoPresentInLocalDatabase(mobileNumber: String) {
+    private fun checkForMobileNoPresentInLocalDatabase(mobileNumber: String, pin: String) {
 
         //check mobile number in local database
         val realm = mViewModel.mDatabaseRealm.realmInstance
@@ -64,7 +65,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                 showToast(getString(R.string.error_no_internet_connection))
                 return
             }
-            mViewModel.getSchoolDetails(mobileNumber)
+            mViewModel.getSchoolDetails(mobileNumber, pin)
         }
     }
 
@@ -73,15 +74,16 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
     }
 
     private val loginResponseObserver: Observer<SyncUpApiResponse> = Observer {
-        checkForMobileNoPresentInLocalDatabase(textInputEditTextMobileNo.text.toString())
+        checkForMobileNoPresentInLocalDatabase(textInputEditTextMobileNo.text.toString(), textInputEditTextPin.text.toString())
     }
 
     private fun switchToNextScreen(mStaff: Staff) {
 
         val bundle = Bundle()
         bundle.putString("mobile_number", mStaff.mobile_number)
+        bundle.putString("pin", mStaff.pin)
 
-        ActivityManager.startActivityWithBundle(this@LoginActivity, VerifyPinActivity::class.java, bundle)
+        ActivityManager.startActivityWithBundle(this@LoginActivity, ClassSelectionActivity::class.java, bundle)
         startFwdAnimation(this@LoginActivity)
         finish()
     }

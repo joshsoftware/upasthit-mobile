@@ -36,7 +36,7 @@ class VerifyPinActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
 
     override fun init() {
 
-        val mobileNumber = intent.extras.getString("mobile_number")
+        val mobileNumber = intent?.extras?.getString("mobile_number")
 
         buttonSignIn.setOnClickListener {
 
@@ -49,8 +49,8 @@ class VerifyPinActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                 val bundle = Bundle()
                 bundle.putString("mobile_number", mStaff.mobile_number)
 
-                ActivityManager.startActivityWithBundle(this@VerifyPinActivity, ClassSelectionActivity::class.java, bundle)
-                startFwdAnimation(this@VerifyPinActivity)
+                ActivityManager.startActivityWithBundle(this, ClassSelectionActivity::class.java, bundle)
+                startFwdAnimation(this)
                 finish()
             } else {
                 showToast("Wrong Pin, Please contact to school admin")

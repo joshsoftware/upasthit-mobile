@@ -19,9 +19,9 @@ open class LoginViewModel : BaseViewModel() {
 
     private val mSyncDataResponse = MutableLiveData<SyncUpApiResponse>()
 
-    fun getSchoolDetails(mobileNumber: String) {
+    fun getSchoolDetails(mobileNumber: String, pin: String) {
         setProgress(true)
-        mDisposable = mNetworkClient.getSynData(mobileNumber, this)!!
+        mDisposable = mNetworkClient.getSynData(mobileNumber, pin, this)!!
     }
 
     fun getSchoolDetailsResponse(): LiveData<SyncUpApiResponse> {
@@ -37,7 +37,7 @@ open class LoginViewModel : BaseViewModel() {
                 // add response to realm database
                 val realm = mDatabaseRealm.realmInstance
                 realm.executeTransaction { realm ->
-                    realm.copyToRealm(response.body())
+                    realm.copyToRealm(response.body()!!)
                 }
 
                 val notesCount = realm.where(School::class.java).findAll().count()

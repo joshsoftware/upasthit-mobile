@@ -12,8 +12,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
-        android:animateLayoutChanges="true">
+        android:animateLayoutChanges="true"
+        android:background="@android:color/white">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline25"
@@ -61,13 +61,40 @@
                 android:id="@+id/textInputEditTextMobileNo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="start"
                 android:imeOptions="actionDone"
-                android:padding="16dp"
-                android:textSize="18sp"
-                android:gravity="center"
-                android:text="9876543210"
                 android:inputType="phone"
-                android:maxLength="10" />
+                android:maxLength="10"
+                android:padding="16dp"
+                android:textSize="18sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutPin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:background="@android:color/white"
+            android:hint="Pin"
+            android:theme="@style/TextLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutMobileNo">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputEditTextPin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:imeOptions="actionDone"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:padding="16dp"
+                android:textSize="18sp" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -84,7 +111,7 @@
             android:textColor="@android:color/white"
             app:layout_constraintEnd_toStartOf="@+id/guidelineVer75"
             app:layout_constraintStart_toStartOf="@+id/guidelineVer25"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutMobileNo" />
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPin" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline75"
@@ -99,10 +126,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@drawable/hollow_rounded_edges_box_with_primary"
-            android:text="Click here to Register"
-            android:visibility="invisible"
-            android:textColor="@color/colorPrimary"
             android:foreground="?attr/selectableItemBackground"
+            android:text="Click here to Register"
+            android:textColor="@color/colorPrimary"
+            android:visibility="invisible"
             app:layout_constraintBottom_toTopOf="@+id/textViewTermsAndPrivacyPolicy"
             app:layout_constraintEnd_toStartOf="@+id/guidelineVer75"
             app:layout_constraintStart_toStartOf="@+id/guidelineVer25"

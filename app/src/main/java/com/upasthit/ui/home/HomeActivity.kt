@@ -40,7 +40,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
     override fun navigateToNextScreen() {
     }
 
-    private var mobileNumber = ""
+    private var mobileNumber: String? = ""
+    private var pin: String? = ""
     private var isListViewSelected = true
     private lateinit var mStudentsAdapter: StudentsAdapter
 
@@ -62,9 +63,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
 
     override fun init() {
 
-        mobileNumber = intent.extras.getString("mobile_number")
-        val selectedStandard = intent.extras.getString("selectedStandardWithSection")
-        val standardId = intent.extras.getString("standardId")
+        mobileNumber = intent?.extras?.getString("mobile_number")
+        pin = intent?.extras?.getString("pin")
+
+        val selectedStandard = intent?.extras?.getString("selectedStandardWithSection")
+        val standardId = intent?.extras?.getString("standardId")
 
         textViewClassSection.text = "Class $selectedStandard"
 
@@ -80,7 +83,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
         mNavigationButtonRequired = false
         mStudentsAdapter = recyclerViewStudents.adapter as StudentsAdapter
 
-        setDrawerUserData(mobileNumber)
+        setDrawerUserData(mobileNumber!!)
 
         val realm = mViewModel.mDatabaseRealm.realmInstance
 
@@ -105,12 +108,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
                 isListViewSelected = false
                 imageViewListViewType.setImageResource(com.upasthit.R.drawable.ic_view_list)
                 constrainListTitle.visibility = View.GONE
-                recyclerViewStudents.layoutManager = GridLayoutManager(this@HomeActivity, AppAndroidUtils.calculateNoOfColumns(this@HomeActivity, 60f))
+                recyclerViewStudents.layoutManager = GridLayoutManager(this, AppAndroidUtils.calculateNoOfColumns(this, 60f))
             } else {
                 isListViewSelected = true
                 imageViewListViewType.setImageResource(com.upasthit.R.drawable.ic_view_grid)
                 constrainListTitle.visibility = View.VISIBLE
-                recyclerViewStudents.layoutManager = LinearLayoutManager(this@HomeActivity)
+                recyclerViewStudents.layoutManager = LinearLayoutManager(this)
             }
             mStudentsAdapter.setLayoutFromFlag(isListViewSelected)
         }
@@ -129,11 +132,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
 
                 val bundle = Bundle()
                 bundle.putString("mobile_number", mobileNumber)
+                bundle.putString("pin", pin)
                 bundle.putString("standardId", standardId)
                 bundle.putString("selectedStandardWithSection", selectedStandard)
                 bundle.putParcelableArrayList(ApplicationConstant.ABSENT_STUDENT_DATA, mViewModel.getSelectedStudentList())
-                ActivityManager.startActivityForResultWithBundle(this@HomeActivity, AbsentStudentActivity::class.java, 1, bundle)
-                startFwdAnimation(this@HomeActivity)
+                ActivityManager.startActivityForResultWithBundle(this, AbsentStudentActivity::class.java, 1, bundle)
+                startFwdAnimation(this)
 
             } else {
                 showToast("Please select absent student")
@@ -217,7 +221,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
             showToast(getString(R.string.error_no_internet_connection))
             return
         }
-        mViewModel.getSchoolDetails(mobileNumber)
+        mViewModel.getSchoolDetails(mobileNumber!!, pin!!)
     }
 
     private val loginResponseObserver: Observer<SyncUpApiResponse> = Observer {

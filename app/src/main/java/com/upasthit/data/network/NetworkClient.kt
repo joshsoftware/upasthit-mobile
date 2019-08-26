@@ -29,8 +29,8 @@ class NetworkClient constructor(networkServices: NetworkServices?) {
      * To call api for getting school data
      */
 
-    fun getSynData(mobileNo: String, mViewModel: LoginViewModel): Disposable? {
-        return mNetworkServices?.syncData(mobileNo)
+    fun getSynData(mobileNo: String, pin: String, mViewModel: LoginViewModel): Disposable? {
+        return mNetworkServices?.syncData(mobileNo, pin)
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())
                 ?.subscribe({ t ->
@@ -43,8 +43,8 @@ class NetworkClient constructor(networkServices: NetworkServices?) {
     /**
      * To call api for mark attendance
      */
-    fun createAttendance(mCreateDeleteInterestRequest: CreateAttendanceRequest, mViewModel: AbsentStudentViewModel): Disposable? {
-        return mNetworkServices?.createAttendance(mCreateDeleteInterestRequest)
+    fun createAttendance(mobileNo: String, pin: String, mCreateDeleteInterestRequest: CreateAttendanceRequest, mViewModel: AbsentStudentViewModel): Disposable? {
+        return mNetworkServices?.createAttendance(mobileNo, pin, mCreateDeleteInterestRequest)
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribeOn(Schedulers.io())
                 ?.subscribe({ t ->

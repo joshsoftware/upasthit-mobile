@@ -25,9 +25,9 @@ class AbsentStudentViewModel : BaseViewModel() {
         notifyPropertyChanged(BR._all)
     }
 
-    fun createAttendanceRequest(mCreateDeleteInterestRequest: CreateAttendanceRequest) {
+    fun createAttendanceRequest(mobileNo: String, pin: String, mCreateDeleteInterestRequest: CreateAttendanceRequest) {
         setProgress(true)
-        mDisposable = mNetworkClient.createAttendance(mCreateDeleteInterestRequest, this)!!
+        mDisposable = mNetworkClient.createAttendance(mobileNo, pin, mCreateDeleteInterestRequest, this)!!
     }
 
     fun getAttendanceResponse(): LiveData<CreateAttendanceResponse> {

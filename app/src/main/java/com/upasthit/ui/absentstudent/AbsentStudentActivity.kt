@@ -55,6 +55,8 @@ class AbsentStudentActivity : BaseActivity<ActivityAbsentStudentBinding, AbsentS
     override fun init() {
 
         val mobileNumber = intent.extras.getString("mobile_number")
+        val pin = intent.extras.getString("pin")
+
         val selectedStandard = intent.extras.getString("selectedStandardWithSection")
         val standardId = intent.extras.getString("standardId")
 
@@ -88,12 +90,12 @@ class AbsentStudentActivity : BaseActivity<ActivityAbsentStudentBinding, AbsentS
                 isListViewSelected = false
                 imageViewListViewType.setImageResource(com.upasthit.R.drawable.ic_view_list)
                 constrainListTitle.visibility = View.GONE
-                recyclerViewAbsentStudents.layoutManager = GridLayoutManager(this@AbsentStudentActivity, AppAndroidUtils.calculateNoOfColumns(this@AbsentStudentActivity, 60f))
+                recyclerViewAbsentStudents.layoutManager = GridLayoutManager(this, AppAndroidUtils.calculateNoOfColumns(this@AbsentStudentActivity, 60f))
             } else {
                 isListViewSelected = true
                 imageViewListViewType.setImageResource(com.upasthit.R.drawable.ic_view_grid)
                 constrainListTitle.visibility = View.VISIBLE
-                recyclerViewAbsentStudents.layoutManager = LinearLayoutManager(this@AbsentStudentActivity)
+                recyclerViewAbsentStudents.layoutManager = LinearLayoutManager(this)
             }
             mAbsentStudentAdapter.setLayoutFromFlag(isListViewSelected)
         }
@@ -106,7 +108,7 @@ class AbsentStudentActivity : BaseActivity<ActivityAbsentStudentBinding, AbsentS
                     attendanceIds.add(it.roll_no!!.toInt())
                 }
                 val mCreateAttendanceRequest = CreateAttendanceRequest(selectedStandard.substring(0, 1), selectedStandard.substring(4, 5), "1000", todayDate, attendanceIds)
-                mViewModel.createAttendanceRequest(mCreateAttendanceRequest)
+                mViewModel.createAttendanceRequest(mobileNumber, pin, mCreateAttendanceRequest)
             } else {
                 val permission = arrayOf(Manifest.permission.SEND_SMS)
 

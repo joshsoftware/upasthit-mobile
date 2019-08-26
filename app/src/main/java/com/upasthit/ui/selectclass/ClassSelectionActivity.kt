@@ -38,7 +38,8 @@ class ClassSelectionActivity : BaseActivity<ActivityClassSelectionBinding, Class
     override fun init() {
 
         //Fetch standard 7 section details
-        val mobileNumber = intent.extras.getString("mobile_number")
+        val mobileNumber = intent?.extras?.getString("mobile_number")
+        val pin = intent?.extras?.getString("pin")
 
         val realm = mViewModel.mDatabaseRealm.realmInstance
 
@@ -73,6 +74,7 @@ class ClassSelectionActivity : BaseActivity<ActivityClassSelectionBinding, Class
 
             val bundle = Bundle()
             bundle.putString("mobile_number", mStaff?.mobile_number)
+            bundle.putString("pin", pin)
             bundle.putString("standardId", standards[spinnerSection.selectedItemPosition].id)
 
             val selectedStandardWithSection = spinnerClass.selectedItem.toString().replace("Standard ", "").replace(" Section ", "-").trim()
