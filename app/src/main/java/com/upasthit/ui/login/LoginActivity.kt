@@ -48,7 +48,21 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
         phoneSelectorDialog()
 
         buttonSignIn.setOnClickListener {
-            checkForMobileNoPresentInLocalDatabase(textInputEditTextMobileNo.text.toString(), textInputEditTextPin.text.toString())
+
+            val mobileNumber = textInputEditTextMobileNo.text.toString().trim()
+            val pin = textInputEditTextPin.text.toString().trim()
+
+            if (mobileNumber.isEmpty()) {
+                showToast("Please enter your mobile number")
+                return@setOnClickListener
+            }
+
+            if (pin.isEmpty()) {
+                showToast("Please enter your pin")
+                return@setOnClickListener
+            }
+
+            checkForMobileNoPresentInLocalDatabase(mobileNumber, pin)
         }
     }
 
@@ -59,7 +73,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
         val mStaff = realm.where(Staff::class.java).equalTo("mobile_number", mobileNumber).findFirst()
 
         if (mStaff != null) {
-            switchToNextScreen(mStaff)
+
+            if (mStaff.pin?.trim() == pin.trim()) {
+                switchToNextScreen(mStaff)
+            } else {
+                showToast("Invalid Pin, Please try again.")
+            }
         } else {
             if (NetworkUtilities.isInternet(this).not()) {
                 showToast(getString(R.string.error_no_internet_connection))

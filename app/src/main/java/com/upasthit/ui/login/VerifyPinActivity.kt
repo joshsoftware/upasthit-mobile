@@ -37,6 +37,7 @@ class VerifyPinActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
     override fun init() {
 
         val mobileNumber = intent?.extras?.getString("mobile_number")
+        val pin = intent?.extras?.getString("pin")
 
         buttonSignIn.setOnClickListener {
 
