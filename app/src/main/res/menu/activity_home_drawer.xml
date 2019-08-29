@@ -11,7 +11,8 @@
         <item
             android:id="@+id/nav_attendance_history"
             android:icon="@drawable/ic_history_black_24dp"
-            android:title="Attendance History" />
+            android:title="Attendance History"
+            android:visible="false" />
         <item
             android:id="@+id/nav_sync_content"
             android:icon="@drawable/ic_sync_black_24dp"
@@ -19,7 +20,8 @@
         <item
             android:id="@+id/nav_about_app"
             android:icon="@drawable/ic_info_black_24dp"
-            android:title="About App" />
+            android:title="About App"
+            android:visible="false" />
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_power_settings_new_black_24dp"

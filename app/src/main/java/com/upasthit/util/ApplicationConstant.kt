@@ -23,6 +23,8 @@ object ApplicationConstant {
     val LOCALE = "mr-IN"
     val COUNTRY_CODE = "+91"
 
+    val SERVER_MOBILE_NUMBER = "9225592255"
+
     //Fragment transactions
     const val ADD_FRAGMENT = 1
     const val REPLACE_FRAGMENT = 2

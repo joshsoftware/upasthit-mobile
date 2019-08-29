@@ -31,6 +31,7 @@ import kotlin.collections.ArrayList
 class AbsentStudentActivity : BaseActivity<ActivityAbsentStudentBinding, AbsentStudentViewModel>(), EasyPermissions.PermissionCallbacks, AppAndroidUtils.OnAlertDialogSelectListener {
 
     private val EP_SMS_PERMISSION = 1
+    private var SMS_CONTENT = ""
 
     override fun navigateToNextScreen() {
 
@@ -102,18 +103,26 @@ class AbsentStudentActivity : BaseActivity<ActivityAbsentStudentBinding, AbsentS
 
         textViewConfirm.setOnClickListener {
 
+            val standard = selectedStandard.substring(0, 1)
+            val section = selectedStandard.substring(4, 5)
+            val schoolId = "1000"
+
+            SMS_CONTENT = "JOSH $todayDate $schoolId $standard-$section 1 2"
+
             if (NetworkUtilities.isInternet(this)) {
                 val attendanceIds = ArrayList<Int>()
                 absentStudentList.forEach {
                     attendanceIds.add(it.roll_no!!.toInt())
                 }
-                val mCreateAttendanceRequest = CreateAttendanceRequest(selectedStandard.substring(0, 1), selectedStandard.substring(4, 5), "1000", todayDate, attendanceIds)
+
+                val mCreateAttendanceRequest = CreateAttendanceRequest(standard, section, schoolId, todayDate, attendanceIds)
+
                 mViewModel.createAttendanceRequest(mobileNumber, pin, mCreateAttendanceRequest)
             } else {
                 val permission = arrayOf(Manifest.permission.SEND_SMS)
 
                 if (EasyPermissions.hasPermissions(this, *permission)) {
-                    mViewModel.sendMessage("8956016201", "Test message")
+                    mViewModel.sendMessage(ApplicationConstant.SERVER_MOBILE_NUMBER, SMS_CONTENT)
                 } else {
                     EasyPermissions.requestPermissions(this, getString(R.string.label_sms_permission), EP_SMS_PERMISSION, *permission)
                 }
@@ -150,7 +159,7 @@ class AbsentStudentActivity : BaseActivity<ActivityAbsentStudentBinding, AbsentS
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
-        mViewModel.sendMessage("8956016201", "Test message")
+        mViewModel.sendMessage(ApplicationConstant.SERVER_MOBILE_NUMBER, SMS_CONTENT)
     }
 
     override fun onPositiveButtonClick() {
